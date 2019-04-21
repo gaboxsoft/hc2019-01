@@ -1,6 +1,20 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\components",
+    "\\library",
+    "\\library\\msiReportes",
+    "\\models",
+    "\\msiformatos",
+    "\\node_modules\\bootstrap",
+    "\\node_modules\\bootstrap\\dist",
+    "\\node_modules\\bootstrap\\dist\\css",
+    "\\plugins",
+    "\\public",
+    "\\public\\content",
+    "\\public\\content\\css",
+    "\\public\\content\\js",
+    "\\routes"
   ],
   "SelectedNode": "\\sube.bat",
   "PreviewInSolutionExplorer": false

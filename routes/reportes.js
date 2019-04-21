@@ -3,6 +3,7 @@ const NotaUrgencias = require('../models/notaUrgencias');
 const Evolucion = require('../models/evolucion');
 const Receta = require('../models/receta');
 const OrdenesMedico = require('../models/ordenesMedico');
+const ConsentimientoInformado = require('../models/consentimientoInformado');
 
 const express = require('express');
 const app = express();
@@ -19,6 +20,7 @@ const notaUrgenciasPdf = require('../library/msiReportes/notaUrgenciasPdf');
 const hojaEvolucionPdf = require('../library/msiReportes/hojaEvolucionPdf');
 const recetaPdf = require('../library/msiReportes/recetaPdf');
 const ordenesMedicoPdf = require('../library/msiReportes/ordenesMedicoPdf');
+const consentimientoInfPdf = require('../library/msiReportes/consentimientoInfPdf');
 
 
 //app.get('/contrato', verificaToken, function(req, res) {
@@ -26,6 +28,37 @@ app.get('/msi00/:id', function (req, res) {
 
   console.log('generando contrato..................');
   contratoPdf();
+
+  ////rpt.save('CMSI-00-contrato.pdf');
+
+
+  return res.status(200).json({ ok: true, data: 'todo bien....' });
+});
+
+app.get('/msi02/:id', function (req, res) {
+
+  //id de paciente
+
+  console.log('generando consentimiento informado...............');
+  const id = req.params.id;
+  let token = req.get('token');
+  ConsentimientoInformado.findOne({ paciente: id }, (err, consentimientoInformadoBD) => {
+    if (err) {
+      return res.status(400).
+        json({ ok: false, error: 'Error al generar formato consetimiento informado PDF ' + err });
+    };
+    if (!consentimientoInformadoBD) {
+      return res.status(401).
+        json({ ok: false, error: 'Error al generar formato consetimiento informado PDF ' + err });
+    };
+    //console.log('EN REPORTE.JS GET MSI02', consentimientoInformadoBD)
+
+    let filePath = consentimientoInfPdf(consentimientoInformadoBD);
+
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-00', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+
+  }).populate('paciente');
+  consentimientoInfPdf();
 
   ////rpt.save('CMSI-00-contrato.pdf');
 

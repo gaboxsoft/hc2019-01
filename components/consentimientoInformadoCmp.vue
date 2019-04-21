@@ -2,17 +2,18 @@
 <template>
   <div>
     <!--<div>
-      <h2 class="text-primary">{{tituloPagina}}</h2>
-    </div>-->
+    <h2 class="text-primary">{{tituloPagina}}</h2>
+  </div>-->
     <notifyCmp ref="notify" />
     <b-btn class="bg-success button-right " v-on:click="guardar">GUARDAR</b-btn>
+    <b-btn class="bg-success button-right " v-on:click="imprimir">IMPRIMIR</b-btn>
 
     <!--
 
-      ?fechaFirma=&preoperatorio=&procedimientoQuirurgico=&testigo1=&testigo2=&SignBtn=#
+  ?fechaFirma=&preoperatorio=&procedimientoQuirurgico=&testigo1=&testigo2=&SignBtn=#
 
 
-      -->
+  -->
     <!--<form action="#">-->
     <table class="table table-sm table-info">
       <tbody>
@@ -72,7 +73,7 @@
           </tr>
           <tr>
             <td>
-              <b-btn class="bg-success" v-on:click="firmaTestigo1">FIRMA TESTIGO 1</b-btn>      
+              <b-btn class="bg-success" v-on:click="firmaTestigo1">FIRMA TESTIGO 1</b-btn>
             </td>
             <td id="firmaTestigo1">
               <p><img v-bind:src="firma(ci.firmaBase64Testigo1)" width="300" height="60" /></p>
@@ -96,15 +97,15 @@
   </div>
 </template>
 <script>
-  //const urlGetPacientes = process.env.urlServer + '/Pacientes?limite=0&desde=0';//'http://localhost:3000/Pacientes?limite=0&desde=0';
-  //const MAX_SIZE_NOMBRE = 50;
+  
   import axios from 'axios';
 
   import notifyCmp from '~/components/notifyCmp';
   import firmaCmp from '~/components/firmaCmp';
 
-  //import moment from 'moment';
-  //import consentimientoInformadoVue from '../pages/consentimientoInformado.vue';
+  import moment from 'moment';
+  //require('moment/locale/es');
+
   export default {
     name: 'consentimientoInformadoCmp',
     components: {
@@ -130,19 +131,7 @@
       }
     },
     computed: {
-      //getToken() {
-      //  return this.$store.state.token;
-      //},
-      //urlApiPaciente: function () {
-      //  return process.env.urlServer + '/Paciente/' + this.$store.state.pacienteId;//'http://localhost:3000/paciente/' + this.$store.state.pacienteId;
-      //},
-      //urlGetPaciente: function () {
-      //  return process.env.urlServer + '/Paciente/' + this.$store.state.pacienteId;
-      //  //'http://localhost:3000/paciente/' + this.$store.state.pacienteId;
-      //},
-      //getPacienteId() {
-      //  return this.$store.state.pacienteId;
-      //},
+      
       seFirmo: function () {
         console.log('seFirmo()?->' + this.firmaBase64);
         return !(this.firmaBase64 === '');
@@ -151,7 +140,7 @@
 
     watch: {
       seFirmo: function () {
-        //alert('watch:seFirmo->this.seFirmo? ' + this.seFirmo);
+
         if (this.seFirmo) {
           //this.guardar();
           ////alert('seFirmo--> firmado paciente!' + JSON.parse(JSON.stringify(this.firmaBase64)));
@@ -171,10 +160,11 @@
             default:
             // code block
           }
-          //console.log(this.firmaBase64Back);
+
+
           this.estaFirmando = false;
           this.tituloFirma = '';
-          //alert('firmado!');
+
         }
       },
       getPacienteId() {
@@ -261,40 +251,17 @@
             this.$refs.notify.showNotify("ERROR AL GUARDAR: " + err.response, 2.5);
           });
       },
-      eliminar: function () {
-        return true;
-      }
-      ,
-      archiva: () => {
-        return true;
-
-      },
-      modificar: (pacienteId) => {
-        this.$store.commit('setPacienteId', pacienteId)
 
 
-      },
-      seleccionar: function (pacienteId) {
-        //console.log('aquí en seleccionar paciente, id: ', pacienteId);
-        this.$store.commit('setPacienteId', pacienteId)
-
-
-        //this.$router.push({ name: 'index' })
-        //this.$forceUpdate();
-
-      },
-      addPaciente: function () {
-        return true;
-
-      },
       getCurrentPaciente: function () {
-
-        axios.get(this.urlGetPaciente, {
+        console.log('getPaciente');
+        axios.get(process.env.urlServer + '/Paciente/' + this.$store.state.pacienteId, {
           token: this.$store.state.token
         })
           .then((response) => {
-            this.paciente = response.data.paciente;
-            this.paciente.fechaNacimiento = moment(this.paciente.fechaNacimiento).format('YYYY-MM-DD');
+            
+            this.paciente = response.data.paciente;            
+            console.log('getPaciente->', this.paciente);
           },
             (error) => {
               this.paciente = {};
@@ -394,26 +361,33 @@
             });
       },
 
-      //getPacientes: function () {
-      //  //console.log(new Date(), '-->en pacientesCmp--> getPacientes--> this.$store.state.token:', this.$store.state.token);
-      //  this.token = this.$store.state.token;
-      //  axios.get(urlGetPacientes, {
-      //    headers: {
-      //      'token': this.token
-      //    }
-      //  }).then((response) => {
-      //    this.pacientes = response.data.pacientes;
-      //    this.totalPacientes = this.pacientes.length
-      //    //console.log('En pacientesCmp-- success---->>> pasé ', new Date(), '--', this.pacientes.length);
 
-      //  })
-      //    .catch(err => {
-      //      //console.log('---->>> error en Leer la lista de Pacientes:' + err);
-      //      this.totalPacientes = this.pacientes.length
-      //      this.pacientes = {};
-      //      //console.log('En pacientesCmp-- fail---->>> pasé ', new Date(), '--', this.pacientes.length);
-      //    });
-      //},
+      imprimir: function () {
+        if (!this.ci.paciente) {
+          this.$refs.notify.showNotify("ANTES DEBES AGREGAR Y GUARDAR LOS DATOS", 4);
+          return;
+        }
+        axios.get(process.env.urlServer + '/msi02/' + this.$store.state.pacienteId, {
+          headers: {
+            token: this.getToken,
+            Accept: 'application/pdf',
+            responseType: 'blob'
+          }
+        })
+          .then((response) => {
+            console.log('aaquí en imprimir consentiInfo axios y regresó: ', response.data.pdfFile);
+            this.$refs.notify.showNotify("CLICK AQUÍ PARA VER EL FORMATO", 4, response.data.pdfFile, true);
+          },
+            (error) => {
+              this.err = error.response.data.error;
+              //console.log('Error en imprimir Nota Urgencias: ', this.err);
+              this.$refs.notify.showNotify("ERROR AL GENERAR EL FORMATO", 5);
+            });
+      },
+
+
+
+
       getConsentimientoInformado: function () {
 
         axios.get(process.env.urlServer + '/ConsentimientoInformado/' + this.$store.state.pacienteId, {
@@ -422,7 +396,8 @@
           }
         }).then((response) => {
           this.ci = response.data.consentimientoInformado;
-
+          this.ci.fechaFirma = moment(this.ci.fechaFirma).format('YYYY-MM-DD');
+          console.log('ci leido=', this.ci);
         })
           .catch(err => {
             //this.ci = { fechaFirma: Date() };
