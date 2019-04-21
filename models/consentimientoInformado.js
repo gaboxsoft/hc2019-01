@@ -48,7 +48,6 @@ let consentimientoInformadoSchema = new Schema({
   },
   firmaBase64Paciente: {
     type: String,
-    uppercase: true,
   },
 
   nombreRepresentanteLegal: {
@@ -57,7 +56,6 @@ let consentimientoInformadoSchema = new Schema({
   },
   firmaBase64RepresentanteLegal: {
     type: String,
-    uppercase: true,
   },
 
   nombreTestigo1: {
@@ -66,7 +64,6 @@ let consentimientoInformadoSchema = new Schema({
   },
   firmaBase64Testigo1: {
     type: String,
-    uppercase: true,
   },
 
   nombreTestigo2: {
@@ -75,7 +72,6 @@ let consentimientoInformadoSchema = new Schema({
   },
   firmaBase64Testigo2: {
     type: String,
-    uppercase: true,
   },
 
   /////////////////////////

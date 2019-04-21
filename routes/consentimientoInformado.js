@@ -1,4 +1,5 @@
 const ConsentimientoInformado = require('../models/consentimientoInformado');
+const Paciente = require('../models/paciente');
 
 const express = require('express');
 const app = express();
@@ -52,13 +53,13 @@ let { verificaToken, verificaAdminRol, rolADE } = require('../middleware/autenti
   //});
 }
 //app.get('/paciente/:id', verificaToken, function (req, res) {
-app.get('/consentimientoInformado/:id', function (req, res) {
+app.get('/ConsentimientoInformado/:id', function (req, res) {
   const id = req.params.id; // Id del paciente
   let token = req.get('token');
 
-  ConsentimientoInformado.findOne(id, (err, consentimientoInformadoBD) => {
+  ConsentimientoInformado.findOne({ paciente:id }, (err, consentimientoInformadoBD) => {
     if (err) {
-      return res.status(401).
+      return res.status(400).
         json({ ok: false, error: err, mensaje: 'hubo en error' });
     };
 
@@ -77,7 +78,7 @@ app.post('/consentimientoInformado/:id', [verificaToken, verificaAdminRol], func
   let body = req.body;
 
   // Busca paciente
-  Paciente.findByIdAndUpdate(id, { diagnosticoEgreso: body.diagnosticoEgreso }, (err, pacienteBD) => {
+  Paciente.findById(id, (err, pacienteBD) => {
     if (err) {
       return res.status(400).json({ ok: false, error: err });
 
@@ -96,6 +97,8 @@ app.post('/consentimientoInformado/:id', [verificaToken, verificaAdminRol], func
       procedimientoQuirurgico: body.procedimientoQuirurgico,
       nombreRepresentanteLegal: 'M.C. EVA MARIA ORTIZ RAMIREZ',
       firmaBase64RepresentanteLegal: body.firmaBase64RepresentanteLegal,
+
+      firmaBase64Paciente: body.firmaBase64Paciente,
       nombreTestigo1: body.nombreTestigo1,
       firmaBase64Testigo1: body.firmaBase64Testigo1,
       nombreTestigo2: body.nombreTestigo2,
@@ -123,6 +126,7 @@ app.post('/consentimientoInformado/:id', [verificaToken, verificaAdminRol], func
 app.put('/consentimientoInformado/:id', [verificaToken, rolADE], function (req, res) {
   const id = req.params.id; // Id del paciente
 
+  let body = req.body;
   body.usuario = req.usuario._id;
   body.fechaModificacion = Date.now();
 

@@ -13,67 +13,82 @@
 
 
       -->
-
     <!--<form action="#">-->
-      <table class="table table-sm table-info">
+    <table class="table table-sm table-info">
+      <tbody>
+        <tr>
+          <td>
+            <!--              <input type="datetime-local" v-model="ci.fechaFirma" name="fechaFirma">-->
+            <input type="date" v-model="ci.fechaFirma" name="fechaFirma">
+          </td>
+        </tr>
+        <tr>
+          <td>Caracter de la cirugía o procedimiento:</td>
+          <td>
+            <div>
+              <input type="radio" id="electivo" value="N" v-model="ci.esUrgente">Electivo
+              <input type="radio" id="Urgente" value="S" v-model="ci.esUrgente">Urgente
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="width:25%;">Diagnóstico:</td>
+          <td>{{paciente.diagnosticoEgreso}}</td>
+        </tr>
+        <tr>
+          <td>Preoperatorio:</td>
+          <td><input type="text" class="input-text" v-model="ci.preoperatorio" name="preoperatorio" size="80"></td>
+        </tr>
+
+        <tr>
+          <td>Procedimiento:</td>
+          <td><input type="text" class="input-text" v-model="ci.procedimientoQuirurgico" name="procedimientoQuirurgico" size="80"></td>
+        </tr>
+        <tr>
+          <td>Testigo 1:</td>
+          <td><input type="text" class="input-text" v-model="ci.nombreTestigo1" name="nombreTestigo1" size="80"></td>
+        </tr>
+        <tr>
+          <td>Testigo 2:</td>
+          <td><input type="text" class="input-text" v-model="ci.nombreTestigo2" name="nombreTestigo2" size="80"></td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+    <div>
+      <table>
         <tbody>
           <tr>
             <td>
-              <!--              <input type="datetime-local" v-model="ci.fechaFirma" name="fechaFirma">-->
-              <input type="date" v-model="ci.fechaFirma" name="fechaFirma">
+              <b-btn class="bg-success" v-on:click="firmaPaciente">FIRMA PACIENTE</b-btn>
             </td>
+            <td id="firmaPaciente">
+              <firmaCmp id="firmaX" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
+              <p><img v-bind:src="firma(ci.firmaBase64Paciente)" width="300" height="60" /></p>
+            </td>
+
           </tr>
           <tr>
-            <td>Caracter de la cirugía o procedimiento:</td>
             <td>
-              <div>
-                <input type="radio" id="electivo" value="N" v-model="ci.esUrgente">Electivo
-                <input type="radio" id="Urgente" value="S" v-model="ci.esUrgente">Urgente
-              </div>
+              <b-btn class="bg-success" v-on:click="firmaTestigo1">FIRMA TESTIGO 1</b-btn>      
+            </td>
+            <td id="firmaTestigo1">
+              <p><img v-bind:src="firma(ci.firmaBase64Testigo1)" width="300" height="60" /></p>
             </td>
           </tr>
           <tr>
-            <td style="width:25%;">Diagnóstico:</td>
-            <td>{{paciente.diagnosticoEgreso}}</td>
+            <td>
+              <b-btn class="bg-success" v-on:click="firmaTestigo2">FIRMA TESTIGO 2</b-btn>
+            </td>
+            <td id="firmaTestigo2">
+              <p><img v-bind:src="firma(ci.firmaBase64Testigo2)" width="300" height="60" /></p>
+            </td>
           </tr>
-          <tr>
-            <td>Preoperatorio:</td>
-            <td><input type="text" class="input-text" v-model="ci.preoperatorio" name="preoperatorio" size="80"></td>
-          </tr>
-
-          <tr>
-            <td>Procedimiento:</td>
-            <td><input type="text" class="input-text" v-model="ci.procedimientoQuirurgico" name="procedimientoQuirurgico" size="80"></td>
-          </tr>
-          <tr>
-            <td>Testigo 1:</td>
-            <td><input type="text" class="input-text" v-model="ci.testigo1" name="testigo1" size="80"></td>
-          </tr>
-          <tr>
-            <td>Testigo 2:</td>
-            <td><input type="text" class="input-text" v-model="ci.testigo2" name="testigo2" size="80"></td>
-          </tr>
-
-
         </tbody>
       </table>
-
-      <div>
-        <h5>{{tituloFirma}}</h5>
-        <firmaCmp id="firma" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
-        <b-btn class="bg-success" v-on:click="firmaPaciente">FIRMA PACIENTE</b-btn>
-        <b-btn class="bg-success" v-on:click="firmaTestigo1">FIRMA TESTIGO 1</b-btn>
-        <b-btn class="bg-success" v-on:click="firmaTestigo2">FIRMA TESTIGO 2</b-btn>
-      </div>
-      <div>
-
-        <!--<p>FIRMA PACIENTE: {{firmaBase64Paciente}}</p>-->
-        <p>FIRMA PACIENTE: <img v-bind:src="firma(firmaBase64Paciente)" width="300" height="60" /></p>
-        <p><!--FIRMA TESTIGO1: {{firmaBase64Testigo1}}--></p>
-        <p>FIRMA TESTIGO1: <img v-bind:src="firma(firmaBase64Testigo1)" width="300" height="60" /></p>
-        <p><!--FIRMA TESTIGO2: {{firmaBase64Testigo2}}--></p>
-        <p>FIRMA TESTIGO2: <img v-bind:src="firma(firmaBase64Testigo2)" width="300" height="60" /></p>
-      </div>
+    </div>
 
     <!--</form>-->
     <!--<b-btn class="bg-success" v-on:click="guardar">GUARDAR</b-btn>-->
@@ -88,7 +103,7 @@
   import notifyCmp from '~/components/notifyCmp';
   import firmaCmp from '~/components/firmaCmp';
 
-  import moment from 'moment';
+  //import moment from 'moment';
   //import consentimientoInformadoVue from '../pages/consentimientoInformado.vue';
   export default {
     name: 'consentimientoInformadoCmp',
@@ -100,14 +115,14 @@
       return {
         tituloPagina: '-- CONSENTIMIENTO PARA ANESTESIA --',
         tituloFirma: '',
-        quienFirma:'',
+        quienFirma: '',
         totalPacientes: 0,
         pacientes: {},
         token: '',
         paciente: {},
         ci: {},
         firmaBase64: '',
-        firmaBase64Back:'',
+        firmaBase64Back: '',
         firmaBase64Paciente: '',
         firmaBase64Testigo1: '',
         firmaBase64Testigo2: '',
@@ -128,7 +143,7 @@
       //getPacienteId() {
       //  return this.$store.state.pacienteId;
       //},
-      seFirmo: function () { 
+      seFirmo: function () {
         console.log('seFirmo()?->' + this.firmaBase64);
         return !(this.firmaBase64 === '');
       }
@@ -145,13 +160,13 @@
 
           switch (this.quienFirma) {
             case 'PACIENTE':
-              this.firmaBase64Paciente = this.firmaBase64Back;
+              this.ci.firmaBase64Paciente = this.firmaBase64Back;
               break;
             case 'TESTIGO1':
-              this.firmaBase64Testigo1 = this.firmaBase64Back;
+              this.ci.firmaBase64Testigo1 = this.firmaBase64Back;
               break;
             case 'TESTIGO2':
-              this.firmaBase64Testigo2 = this.firmaBase64Back;
+              this.ci.firmaBase64Testigo2 = this.firmaBase64Back;
               break;
             default:
             // code block
@@ -168,7 +183,7 @@
 
     },
     created() {
-      this.getCurrentPaciente(); 
+      this.getCurrentPaciente();
       this.getConsentimientoInformado();
     },
 
@@ -183,28 +198,31 @@
       firmaPaciente: function () {
         this.tituloFirma = 'FIRMA DE PACIENTE'
         this.quienFirma = 'PACIENTE';
+        document.getElementById('firmaPaciente').appendChild(document.getElementById('firmaX'));
         this.firmar();
       },
       firmaTestigo1: function () {
         this.tituloFirma = 'FIRMA DE TESTIGO 1'
         this.quienFirma = 'TESTIGO1';
+        document.getElementById('firmaTestigo1').appendChild(document.getElementById('firmaX'));
         this.firmar();
       },
       firmaTestigo2: function () {
         this.tituloFirma = 'FIRMA DE TESTIGO 2'
         this.quienFirma = 'TESTIGO2';
+        document.getElementById('firmaTestigo2').appendChild(document.getElementById('firmaX'));
         this.firmar();
       },
       firmar: function () {
-        //alert(this.estaFirmando);
         this.estaFirmando = true;
         this.firmaBase64 = '';
+        document.getElementById('btnIniciarFirma').click();
       },
+
       guardar: function () {
-        alert(JSON.stringify(this.ci));
         this.token = this.getToken;
         const req = {
-          method: JSON.stringify(this.ci) === '{}'?'put':'post',
+          method: this.ci.paciente ? 'put' : 'post',
           url: process.env.urlServer + '/ConsentimientoInformado/' + this.$store.state.pacienteId,
           headers: {
             token: this.$store.state.token
@@ -213,22 +231,24 @@
 
             lugarFirma: this.ci.lugarFirma,
             fechaFirma: this.ci.fechaFirma,
+
             esUrgente: this.ci.esUrgente,
             preoperatorio: this.ci.preoperatorio,
             procedimientoQuirurgico: this.ci.procedimientoQuirurgico,
+
             nombrePaciente: this.ci.nombrePaciente,
             firmaBase64Paciente: this.ci.firmaBase64Paciente,
+
             nombreTestigo1: this.ci.nombreTestigo1,
             firmaBase64Testigo1: this.ci.firmaBase64Testigo1,
             nombreTestigo2: this.ci.nombreTestigo2,
             firmaBase64Testigo2: this.ci.firmaBase64Testigo2,
-            
+
             nombreRepresentanteLegal: this.ci.nombreRepresentanteLegal,
             firmaBase64RepresentanteLegal: this.ci.firmaBase64RepresentanteLegal,
 
           }
         };
-        alert(req);
         axios(req)
           .then((response) => {
             //console.log('En guardar hie-- success---->>> pasé ', response.data);
@@ -268,23 +288,15 @@
 
       },
       getCurrentPaciente: function () {
-        //console.log('>> urlGetPaciente en UPDATE_PACIENTEcmp: ', this.urlGetPaciente);
 
         axios.get(this.urlGetPaciente, {
           token: this.$store.state.token
         })
           .then((response) => {
             this.paciente = response.data.paciente;
-            //console.log('urlGetPaciente en UPDATE_PACIENTEcmp: ', this.urlGetPaciente);
-            //console.log('response.data en UPDATE_PACIENTEcmp: ', response.data);
             this.paciente.fechaNacimiento = moment(this.paciente.fechaNacimiento).format('YYYY-MM-DD');
-            //this.$store.commit('setCurrentPaciente', this.paciente);
           },
             (error) => {
-              //console.log('paciente en updatePaciente ---ERROR -- NO EXISTE: ', this.urlGetPaciente);
-              //this.err = error.response.data.error;
-              //console.log('en UpdatePaciente->getCurrentPaciente->error', this.err);
-              //this.$store.commit('setCurrentPaciente', undefined);
               this.paciente = {};
               let p = {
                 folioCuenta: '',
