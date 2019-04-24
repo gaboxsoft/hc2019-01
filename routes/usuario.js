@@ -8,7 +8,7 @@ const _ = require('underscore');
 
 
 
-let { verificaToken, verificaAdminRol, rolD } = require('../middleware/autenticacion');
+let { verificaToken, verificaAdminRol, rolD, rolA } = require('../middleware/autenticacion');
 
 app.get('/listausuarios', function (req, res) {
 
@@ -37,7 +37,7 @@ app.get('/listausuarios', function (req, res) {
 
 
 
-app.get('/Medicos', [verificaToken, rolD], function (req, res) {
+app.get('/Medicos', [verificaToken, rolD, verificaAdminRol], function (req, res) {
 
   //res.json({ ok: true, mensaje: 'hola desde node Lista Usuarios' });
   //let limite = Number(req.query.limite || 0);

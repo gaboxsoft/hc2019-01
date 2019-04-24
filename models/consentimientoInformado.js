@@ -42,6 +42,10 @@ let consentimientoInformadoSchema = new Schema({
     uppercase: true,
   },
 
+  medicoAnestesiologo: {
+      type: Schema.Types.ObjectId,
+      ref: 'Usuario'
+  },
   nombrePaciente: {
     type: String,
     uppercase: true,

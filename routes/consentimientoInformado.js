@@ -68,7 +68,7 @@ app.get('/ConsentimientoInformado/:id', function (req, res) {
     }
 
     return res.json({ ok: true, consentimientoInformado: consentimientoInformadoBD });
-  }).populate('paciente');
+  }).populate('paciente').populate('medicoAnestesiologo');
 });
 
 app.post('/consentimientoInformado/:id', [verificaToken, verificaAdminRol], function (req, res) {
@@ -103,6 +103,7 @@ app.post('/consentimientoInformado/:id', [verificaToken, verificaAdminRol], func
       firmaBase64Testigo1: body.firmaBase64Testigo1,
       nombreTestigo2: body.nombreTestigo2,
       firmaBase64Testigo2: body.firmaBase64Testigo2,
+      medicoAnestesiologo: body.medicoAnestesiologo,
 
       /////////////////////////
       //Sello
@@ -151,7 +152,7 @@ app.put('/consentimientoInformado/:id', [verificaToken, rolADE], function (req, 
           json({ ok: false, error: { mensaje: 'No existe consentimiento Informado.' } });
       }
       return res.json({ ok: true, consentimientoInformado: consentimientoInformadoBD });
-    }).populate('paciente');
+    }).populate('paciente').populate('medicoAnestesiologo');
   });
 
 });

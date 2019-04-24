@@ -46,6 +46,17 @@
           <td><input type="text" class="input-text" v-model="ci.procedimientoQuirurgico" name="procedimientoQuirurgico" size="80"></td>
         </tr>
         <tr>
+          <td>Médico Anestesiólogo:</td>
+        
+          <td>
+            <select v-model="ci.medicoAnestesiologo">
+              <option v-for="mm in medicos" v-bind:value="mm._id">
+                {{ mm.nombre }} - {{mm.especialidad}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
           <td>Testigo 1:</td>
           <td><input type="text" class="input-text" v-model="ci.nombreTestigo1" name="nombreTestigo1" size="80"></td>
         </tr>
@@ -128,6 +139,7 @@
         firmaBase64Testigo1: '',
         firmaBase64Testigo2: '',
         estaFirmando: false,
+        medicos: {},
       }
     },
     computed: {
@@ -172,11 +184,12 @@
       }
 
     },
+
     created() {
       this.getCurrentPaciente();
       this.getConsentimientoInformado();
+      this.getMedicos();
     },
-
 
     methods: {
       firma: function (firmaBase64) {
@@ -208,6 +221,29 @@
         this.firmaBase64 = '';
         document.getElementById('btnIniciarFirma').click();
       },
+
+      getMedicos: function () {
+        console.log('AQUI EN GETmÉDICOS-->')
+        axios.get(process.env.urlServer + '/Medicos', {
+          headers: {
+            'token': this.$store.state.token,
+          }
+        }).then((response) => {
+          console.log('medicosTratantesCmp.getMedicos-> ok->', response.data.medicos)
+          this.medicos = response.data.medicos;
+          this.medicosBak = JSON.parse(JSON.stringify(this.medicos));
+          this.totalMedicos = this.medicos.length;
+        })
+          .catch(err => {
+            this.totalMedicos = 0;
+            this.medicos = {};
+            let aviso = JSON.parse(JSON.stringify(err)).response.data.error.message;
+            console.log('ERR ->', aviso);
+            this.$refs.notify.showNotify("AVISO:" + aviso, 10);
+
+          });
+      },
+
 
       guardar: function () {
         this.token = this.getToken;

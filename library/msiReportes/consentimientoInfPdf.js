@@ -52,7 +52,7 @@ const consentimientoInfPdf = (consentimientoInformadoBD) => {
   });
   const vacio = '';
 
-  let pathCfg = path.join(__dirname, './consetimientoInfFields.cfg');
+  let pathCfg = path.join(__dirname, './consentimientoInfFields.cfg');
   
   let pages = JSON.parse(fs.readFileSync(pathCfg, 'utf-8').toString().replace(/\n|\r/g, "").trim());
 

@@ -150,11 +150,14 @@
         }
       },
       filtrar: function (nombre, especialidad) {
-        nombre = nombre.toUpperCase();
-        especialidad = especialidad.toUpperCase();
-        console.log('nombre: ', nombre, 'especialidad: ', especialidad)
-        this.medicos = this.medicosBak.filter(m => m.nombre.includes(nombre) && m.especialidad.includes(especialidad));
-        console.log('medicos filtrados:', this.medicos);
+        console.log('medicos BACK:', this.medicosBak);
+        if (this.medicosBak.length>0) {
+          nombre = nombre.toUpperCase();
+          especialidad = especialidad.toUpperCase();
+          console.log('nombre: ', nombre, 'especialidad: ', especialidad)
+          this.medicos = this.medicosBak.filter(m => m.nombre.includes(nombre) && m.especialidad.includes(especialidad));
+          console.log('medicos filtrados:', this.medicos);
+        }
       },
 
       seleccionar: function (pacienteId) {
@@ -219,10 +222,15 @@
           this.medicosBak = JSON.parse(JSON.stringify(this.medicos));
           this.totalMedicos = this.medicos.length;
 
+
         })
           .catch(err => {
             this.totalMedicos = 0;
             this.medicos = {};
+            let aviso = JSON.parse(JSON.stringify(err)).response.data.error.message;
+            console.log('ERR ->',aviso);
+            this.$refs.notify.showNotify("AVISO:"+aviso, 10);
+
           });
       },
 

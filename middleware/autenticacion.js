@@ -128,10 +128,10 @@ let rolE = (req, res, next) => {
 let verificaAdminRol = (req, res, next) => {
   //const desde = req.get('desde');
 
-  //console.log('verificaAdminRol, req.usuario', desde, req.usuario);
-  //console.log('verificaAdminRol, req.usuario.rol!="ADMIN_ROL"?', req.usuario.rol != "ADMIN_ROL");
-  //console.log('verificaAdminRol, req.usuario.rol!="DOCTOR_ROL"?', req.usuario.rol != "DOCTOR_ROL");
-  //console.log('verificaAdminRol, req.usuario.rol!="ENFERMERIA_ROL"?', req.usuario.rol != "ENFERMERIA_ROL");
+  console.log('verificaAdminRol, req.usuario', desde, req.usuario);
+  console.log('verificaAdminRol, req.usuario.rol!="ADMIN_ROL"?', req.usuario.rol != "ADMIN_ROL");
+  console.log('verificaAdminRol, req.usuario.rol!="DOCTOR_ROL"?', req.usuario.rol != "DOCTOR_ROL");
+  console.log('verificaAdminRol, req.usuario.rol!="ENFERMERIA_ROL"?', req.usuario.rol != "ENFERMERIA_ROL");
 
     if (req.usuario.rol != "ADMIN_ROL") {
     return res.status(500).json({
