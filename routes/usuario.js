@@ -8,7 +8,7 @@ const _ = require('underscore');
 
 
 
-let { verificaToken, verificaAdminRol, rolD, rolA } = require('../middleware/autenticacion');
+let { verificaToken, verificaAdminRol, rolD, rolA, rolAD } = require('../middleware/autenticacion');
 
 app.get('/listausuarios', function (req, res) {
 
@@ -37,11 +37,14 @@ app.get('/listausuarios', function (req, res) {
 
 
 
-app.get('/Medicos', [verificaToken, rolD, verificaAdminRol], function (req, res) {
+//app.get('/Medicos', [verificaToken, rolD, verificaAdminRol], function (req, res) {
+  app.get('/Medicos', [verificaToken, rolAD], function (req, res) {
 
   //res.json({ ok: true, mensaje: 'hola desde node Lista Usuarios' });
   //let limite = Number(req.query.limite || 0);
   //let desde = Number(req.query.desde || 0);
+
+  console.log('API GET Medicos');
 
   Usuario.find({ situacion: { $gt: 0 }, rol: 'DOCTOR_ROL' }) // Mayor que cero no esta borrado
     .exec((err, usuarios) => {

@@ -68,14 +68,18 @@ app.get('/ConsentimientoInformado/:id', function (req, res) {
     }
 
     return res.json({ ok: true, consentimientoInformado: consentimientoInformadoBD });
-  }).populate('paciente').populate('medicoAnestesiologo');
+  //}).populate('paciente').populate('medicoAnestesiologo');
+  }).populate('paciente');
 });
 
 app.post('/consentimientoInformado/:id', [verificaToken, verificaAdminRol], function (req, res) {
 
+
   const id = req.params.id; // Id del paciente
 
   let body = req.body;
+
+  //console.log('2.- POST body= ', body);
 
   // Busca paciente
   Paciente.findById(id, (err, pacienteBD) => {
@@ -99,11 +103,16 @@ app.post('/consentimientoInformado/:id', [verificaToken, verificaAdminRol], func
       firmaBase64RepresentanteLegal: body.firmaBase64RepresentanteLegal,
 
       firmaBase64Paciente: body.firmaBase64Paciente,
+
+      medicoAnestesiologo: body.medicoAnestesiologo,
+      firmaBase64Anestesiologo: body.firmaBase64Anestesiologo,
+
       nombreTestigo1: body.nombreTestigo1,
       firmaBase64Testigo1: body.firmaBase64Testigo1,
+
       nombreTestigo2: body.nombreTestigo2,
       firmaBase64Testigo2: body.firmaBase64Testigo2,
-      medicoAnestesiologo: body.medicoAnestesiologo,
+
 
       /////////////////////////
       //Sello
@@ -131,7 +140,11 @@ app.put('/consentimientoInformado/:id', [verificaToken, rolADE], function (req, 
   body.usuario = req.usuario._id;
   body.fechaModificacion = Date.now();
 
-  Paciente.findByIdAndUpdate(id, { diagnosticoEgreso: body.diagnosticoEgreso }, (err, pacienteBD) => {
+  //console.log('3.- PUT this.ci= ', body);
+
+
+  //Paciente.findByIdAndUpdate(id, { diagnosticoEgreso: body.diagnosticoEgreso }, (err, pacienteBD) => {
+  Paciente.findById(id, (err, pacienteBD) => {
     if (err) {
       return res.status(400).json({ ok: false, error: err });
 

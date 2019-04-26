@@ -7,7 +7,7 @@ const situacionValida = require('./situacionValida');
 
 // Schema de consentimiento Informado
 
-let consentimientoInformadoSchema = new Schema({
+let cartaConsentSchema = new Schema({
   // paciente
   paciente: {
     type: Schema.Types.ObjectId,
@@ -23,46 +23,43 @@ let consentimientoInformadoSchema = new Schema({
     type: Date
   },
   
-  esUrgente: {
-    type: String,
-    uppercase: true,
-  },
-
+  
   diagnosticoEgreso: {
     type: String,
     uppercase: true,
   },
 
-  preoperatorio: {
+  diagnosticoClinico: {
     type: String,
     uppercase: true,
   },
-  procedimientoQuirurgico: {
+  estudios: {
+    type: String,
+    uppercase: true,
+  },
+  diactosAnestesicos: {
+    type: String,
+    uppercase: true,
+  },
+  tratamientoMedico: {
+    type: String,
+    uppercase: true,
+  },
+  tratamientoQuirurgico: {
+    type: String,
+    uppercase: true,
+  },
+  riesgos: {
     type: String,
     uppercase: true,
   },
 
-  medicoAnestesiologo: {
-      type: Schema.Types.ObjectId,
-      ref: 'Usuario'
-  },
-  nombrePaciente: {
+  
+  nombreAutoriza: {
     type: String,
     uppercase: true,
   },
-  firmaBase64Paciente: {
-    type: String,
-  },
-
-  firmaBase64Anestesiologo: {
-    type: String,
-  },
-
-  nombreRepresentanteLegal: {
-    type: String,
-    uppercase: true,
-  },
-  firmaBase64RepresentanteLegal: {
+  firmaBase64Autoriza: {
     type: String,
   },
 
@@ -109,5 +106,5 @@ let consentimientoInformadoSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('ConsentimientoInformado', consentimientoInformadoSchema);
+module.exports = mongoose.model('CartaConsent', cartaConsentSchema);
 

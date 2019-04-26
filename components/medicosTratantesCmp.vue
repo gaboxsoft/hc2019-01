@@ -211,7 +211,7 @@
       },
 
       getMedicos: function () {
-        console.log('AQUI EN GETmÉDICOS-->')
+        console.log('AQUI EN GETmÉDICOS tratantes-->')
         axios.get(process.env.urlServer + '/Medicos', {
           headers: {
             'token': this.getToken,

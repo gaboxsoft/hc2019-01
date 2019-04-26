@@ -70,6 +70,10 @@ let verificaToken = (req, res, next) => {
 
 let checkRol = (roles, usuario) => {
 
+   console.log('VERIFICANDO ROL (checkRol())=>');
+  console.log('Usuario.rol=> ?', usuario.rol);
+  console.log('roles=>?', roles);
+  //console.log('verificaAdminRol, req.usuario.rol!="ENFERMERIA_ROL"?', req.usuario.rol != "ENFERMERIA_ROL");
   let ok = false;
   for (var i = 0; i < roles.length; i++) {
     if (usuario.rol == roles[i]) {
@@ -82,6 +86,17 @@ let checkRol = (roles, usuario) => {
 let rolADE = (req, res, next) => {
 
   if (!checkRol(["ADMIN_ROL", "DOCTOR_ROL", "ENFERMERIA_ROL"], req.usuario)) {
+    return res.status(500).json({
+      ok: false,
+      error: { message: 'NO tienes permitido realizar esta acción.' }
+    });
+  }
+
+  next();
+};
+let rolAD = (req, res, next) => {
+
+  if (!checkRol(["ADMIN_ROL", "DOCTOR_ROL"], req.usuario)) {
     return res.status(500).json({
       ok: false,
       error: { message: 'NO tienes permitido realizar esta acción.' }
@@ -248,8 +263,8 @@ module.exports = {
   verificaToken, verificaAdminRol,
   verificaOperadorRol, verificaDoctorRol,
   verificaEnfermeriaRol, verificaPrimerUsuarioAdmin,
-  rolADE, rolD, rolE 
-}
+  rolADE, rolD, rolE, rolAD
+};
 
 
            //////////////////

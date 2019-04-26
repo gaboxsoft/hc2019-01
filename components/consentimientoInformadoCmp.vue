@@ -50,8 +50,8 @@
         
           <td>
             <select v-model="ci.medicoAnestesiologo">
-              <option v-for="mm in medicos" v-bind:value="mm._id">
-                {{ mm.nombre }} - {{mm.especialidad}}
+              <option v-for="mm in paciente.medicos" v-bind:value="mm._id">
+                {{ mm.nombre }} - {{mm.especialidad}} -{{mm._id}}
               </option>
             </select>
           </td>
@@ -79,6 +79,16 @@
             <td id="firmaPaciente">
               <firmaCmp id="firmaX" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
               <p><img v-bind:src="firma(ci.firmaBase64Paciente)" width="300" height="60" /></p>
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <b-btn class="bg-success" v-on:click="firmaAnestesiologo">FIRMA ANESTECIOLOGO</b-btn>
+            </td>
+            <td id="firmaAnestesiologo">
+              <firmaCmp id="firmaX" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
+              <p><img v-bind:src="firma(ci.firmaBase64Anestesiologo)" width="300" height="60" /></p>
             </td>
 
           </tr>
@@ -163,6 +173,9 @@
             case 'PACIENTE':
               this.ci.firmaBase64Paciente = this.firmaBase64Back;
               break;
+            case 'ANESTESIOLOGO':
+              this.ci.firmaBase64Anestesiologo = this.firmaBase64Back;
+              break;
             case 'TESTIGO1':
               this.ci.firmaBase64Testigo1 = this.firmaBase64Back;
               break;
@@ -188,7 +201,7 @@
     created() {
       this.getCurrentPaciente();
       this.getConsentimientoInformado();
-      this.getMedicos();
+      //this.getMedicos();
     },
 
     methods: {
@@ -202,6 +215,12 @@
         this.tituloFirma = 'FIRMA DE PACIENTE'
         this.quienFirma = 'PACIENTE';
         document.getElementById('firmaPaciente').appendChild(document.getElementById('firmaX'));
+        this.firmar();
+      },
+      firmaAnestesiologo: function () {
+        this.tituloFirma = 'FIRMA ANESTESIÓLOGO'
+        this.quienFirma = 'ANESTESIOLOGO';
+        document.getElementById('firmaAnestesiologo').appendChild(document.getElementById('firmaX'));
         this.firmar();
       },
       firmaTestigo1: function () {
@@ -237,16 +256,22 @@
           .catch(err => {
             this.totalMedicos = 0;
             this.medicos = {};
-            let aviso = JSON.parse(JSON.stringify(err)).response.data.error.message;
-            console.log('ERR ->', aviso);
-            this.$refs.notify.showNotify("AVISO:" + aviso, 10);
+
+            let aviso = JSON.parse(JSON.stringify(err));
+            //console.log(' err getMEDICOS ->>', aviso);
+            //let aviso = JSON.parse(JSON.stringify(err)).response.data.error.message;
+            //console.log('ERR ->', aviso.response.data.error.message);
+            this.$refs.notify.showNotify("AVISO:" + aviso.response.data.error.message, 10);
+            
 
           });
       },
 
 
       guardar: function () {
-        this.token = this.getToken;
+
+        console.log('1.- this.ci= ', this.ci);
+
         const req = {
           method: this.ci.paciente ? 'put' : 'post',
           url: process.env.urlServer + '/ConsentimientoInformado/' + this.$store.state.pacienteId,
@@ -264,6 +289,9 @@
 
             nombrePaciente: this.ci.nombrePaciente,
             firmaBase64Paciente: this.ci.firmaBase64Paciente,
+
+            medicoAnestesiologo : this.ci.medicoAnestesiologo,
+            firmaBase64Anestesiologo: this.ci.firmaBase64Anestesiologo,
 
             nombreTestigo1: this.ci.nombreTestigo1,
             firmaBase64Testigo1: this.ci.firmaBase64Testigo1,

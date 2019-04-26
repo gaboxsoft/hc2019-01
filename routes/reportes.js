@@ -58,12 +58,12 @@ app.get('/msi02/:id', function (req, res) {
     return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-00', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
 
   }).populate('paciente');
-  consentimientoInfPdf();
+  //consentimientoInfPdf();
 
   ////rpt.save('CMSI-00-contrato.pdf');
 
 
-  return res.status(200).json({ ok: true, data: 'todo bien....' });
+  //return res.status(200).json({ ok: true, data: 'todo bien....' });
 });
 
 app.get('/msi10/:id', function (req, res) {
