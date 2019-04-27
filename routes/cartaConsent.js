@@ -6,7 +6,7 @@ const app = express();
 
 const _ = require('underscore');
 
-let { verificaToken, verificaAdminRol, rolADE } = require('../middleware/autenticacion');
+let { verificaToken, verificaAdminRol, rolADE, rolAD } = require('../middleware/autenticacion');
 {
   //app.get('/consentimientoInformado', verificaToken, function (req, res) {
 
@@ -72,14 +72,14 @@ app.get('/cartaConsent/:id', function (req, res) {
   }).populate('paciente');
 });
 
-app.post('/cartaConsent/:id', [verificaToken, verificaAdminRol], function (req, res) {
+app.post('/cartaConsent/:id', [verificaToken, rolAD], function (req, res) {
 
 
   const id = req.params.id; // Id del paciente
 
   let body = req.body;
 
-  //console.log('2.- POST body= ', body);
+  console.log('2.- POST body= ', body);
 
   // Busca paciente
   Paciente.findById(id, (err, pacienteBD) => {
@@ -100,8 +100,8 @@ app.post('/cartaConsent/:id', [verificaToken, verificaAdminRol], function (req, 
       estudios: body.estudios,
       actosAnestesicos: body.actosAnestesicos,
       tratamientoMedico: body.tratamientoMedico,
-      tratamientoQuirurgico: bosy.tratamientoQuirurgico,
-      riesgos: bosy.riesgos,
+      tratamientoQuirurgico: body.tratamientoQuirurgico,
+      riesgos: body.riesgos,
 
      
       nombreAutoriza: body.nombreAutoriza,
@@ -141,7 +141,7 @@ app.put('/cartaConsent/:id', [verificaToken, rolADE], function (req, res) {
   body.usuario = req.usuario._id;
   body.fechaModificacion = Date.now();
 
-  //console.log('3.- PUT this.ci= ', body);
+  console.log('3.- PUT this.ci= ', body);
 
 
   //Paciente.findByIdAndUpdate(id, { diagnosticoEgreso: body.diagnosticoEgreso }, (err, pacienteBD) => {
@@ -156,7 +156,7 @@ app.put('/cartaConsent/:id', [verificaToken, rolADE], function (req, res) {
 
     body.diagnosticoEgreso = pacienteBD.diagnosticoEgreso;
 
-    cartaConsent.findOneAndUpdate({ paciente: id, 'situacionSe': { $eq: 1 } }, body, { new: true, runValidators: true, context: 'query' }, (err, cartaConsentBD) => {
+    CartaConsent.findOneAndUpdate({ paciente: id, 'situacionSe': { $eq: 1 } }, body, { new: true, runValidators: true, context: 'query' }, (err, cartaConsentBD) => {
       if (err) {
         return res.status(400).
           json({ ok: false, error: { mensaje: err } });

@@ -26,7 +26,7 @@
         </tr>
         <tr>
           <td>Diagnóstico(s) clínico(s):</td>
-          <td><textarea type="text" class="input-text"  v-model="cc.diagnostico" name="diagnostico"  rows="5" cols="80"></textarea></td>
+          <td><textarea type="text" class="input-text"  v-model="cc.diagnosticoClinico" name="diagnosticoClinico"  rows="5" cols="80"></textarea></td>
         </tr>
         <tr>
           <td>Estudios de laboratorio, gabinete e histopatológicos:</td>
@@ -255,32 +255,31 @@
 
         const req = {
           method: this.cc.paciente ? 'put' : 'post',
-          url: process.env.urlServer + '/ConsentimientoInformado/' + this.$store.state.pacienteId,
+          url: process.env.urlServer + '/cartaConsent/' + this.$store.state.pacienteId,
           headers: {
             token: this.$store.state.token
           },
           data: {
-
-            lugarFirma: this.cc.lugarFirma,
+            //lugarFirma: this.cc.lugarFirma,
             fechaFirma: this.cc.fechaFirma,
 
-            esUrgente: this.cc.esUrgente,
-            preoperatorio: this.cc.preoperatorio,
-            procedimientoQuirurgico: this.cc.procedimientoQuirurgico,
+            //diagnosticoEgreso: this.cc.diagnosticoEgreso,
+            diagnosticoClinico: this.cc.diagnosticoClinico,
+            estudios: this.cc.estudios,
+            actosAnestesicos: this.cc.actosAnestesicos,
+            tratamientoMedico: this.cc.tratamientoMedico,
+            tratamientoQuirurgico: this.cc.tratamientoQuirurgico,            
+            riesgos: this.cc.riesgos,
 
-            nombrePaciente: this.cc.nombrePaciente,
-            firmaBase64Paciente: this.cc.firmaBase64Paciente,
+            nombreAutoriza: this.cc.nombreAutoriza,
+            firmaBase64Autoriza: this.cc.firmaBase64Autoriza,
 
-            medicoAnestesiologo: this.cc.medicoAnestesiologo,
-            firmaBase64Anestesiologo: this.cc.firmaBase64Anestesiologo,
-
+            
             nombreTestigo1: this.cc.nombreTestigo1,
             firmaBase64Testigo1: this.cc.firmaBase64Testigo1,
+
             nombreTestigo2: this.cc.nombreTestigo2,
             firmaBase64Testigo2: this.cc.firmaBase64Testigo2,
-
-            nombreRepresentanteLegal: this.cc.nombreRepresentanteLegal,
-            firmaBase64RepresentanteLegal: this.cc.firmaBase64RepresentanteLegal,
 
           }
         };
@@ -412,7 +411,7 @@
           this.$refs.notify.showNotify("ANTES DEBES AGREGAR Y GUARDAR LOS DATOS", 4);
           return;
         }
-        axios.get(process.env.urlServer + '/msi02/' + this.$store.state.pacienteId, {
+        axios.get(process.env.urlServer + '/msi01/' + this.$store.state.pacienteId, {
           headers: {
             token: this.getToken,
             Accept: 'application/pdf',
@@ -441,7 +440,7 @@
           }
         }).then((response) => {
           this.cc = response.data.cartaConsent;
-          this.cc.fechaFirma = moment(this.cc.fechaFirma).format('YYYY-MM-DD HH:MM:ss');
+          this.cc.fechaFirma = moment(this.cc.fechaFirma).format('YYYY-MM-DD HH:mm');
           console.log('cc leido=', this.cc);
         })
           .catch(err => {
