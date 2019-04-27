@@ -13,7 +13,7 @@ const cartaConsentPdf = (cartaConsentBD) => {
   console.log('1.- EN CARTA CONSENT INFO->', cartaConsentBD);
 
   let cc = cartaConsentBD;
-  console.log('EN CARTA CONSENT INFO->',cc);
+  console.log('EN CARTA CONSENT INFO->', cc);
   let paciente = cc.paciente;
 
   const hojaCartaPort = [612, 792];
@@ -58,6 +58,7 @@ const cartaConsentPdf = (cartaConsentBD) => {
 
   let pages = JSON.parse(fs.readFileSync(pathCfg, 'utf-8').toString().replace(/\n|\r/g, "").trim());
 
+  doc.registerFont('arialnarrow', 'fonts/arial-narrow.ttf');
 
   //pages.forEach(function (field) {
   //  console.log('\r\n sfield->', field.name);
@@ -67,7 +68,12 @@ const cartaConsentPdf = (cartaConsentBD) => {
 
   pages[0].forEach(function (field) {
     console.log('field-->', field, 'type->', field.type);
-    writeLine(doc, eval(field.name), field.row, field.col, field.align, field.fontSize, field.color, field.width, field.type);
+
+    let domicilio = (cc.calle ? cc.calle + ' ' + (cc.numExterior || '') + ' ' + (cc.numInterior || '') + ', ' : '') +
+      (cc.colonia ? cc.colonia + ',' : '') + (cc.municipio ? cc.municipio + ' ' : '') +
+      (cc.entidad ? cc.entidad + ' ' : '') + (cc.CP ? ' CP' + cc.CP : '');
+
+    writeLine(doc, eval(field.name), field.row, field.col, field.align, field.indent, field.fontSize, field.color, field.width, field.type);
   });
 
   /// Agrega otra hoja
@@ -88,7 +94,7 @@ const cartaConsentPdf = (cartaConsentBD) => {
   //  writeLine(doc, eval(field.name), field.row, field.col, field.align, field.fontSize, field.color, field.width, field.type);
   //});
 
-  
+
 
 
 
@@ -111,7 +117,7 @@ const cartaConsentPdf = (cartaConsentBD) => {
 
 
 
-function writeLine(doc, text, row, col, align, fontSize, color, width, type) {
+function writeLine(doc, text, row, col, align, indent, fontSize, color, width, type) {
   const vacio = '';
   //console.log('---- ');
   //console.log('in writeLine-> text: [', text, '] typeOf', typeof (text));
@@ -140,7 +146,7 @@ function writeLine(doc, text, row, col, align, fontSize, color, width, type) {
       .text(text || vacio, {
         align: align || 'left',
         width: pdfTools.cmToPt(width),
-        //indent: 2,
+        indent: (pdfTools.cmToPt(indent) || 0),
         ellipsis: true
       });
   }
@@ -151,7 +157,7 @@ function writeLine(doc, text, row, col, align, fontSize, color, width, type) {
       .text(text || vacio, pdfTools.cmToPt(col || 1), pdfTools.cmToPt(row || 1), {
         align: align || 'left',
         width: pdfTools.cmToPt(width),
-        //indent: 2,
+        indent: (pdfTools.cmToPt(indent) || 0),
         ellipsis: true
       });
   };

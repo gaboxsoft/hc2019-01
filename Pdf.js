@@ -67,6 +67,7 @@ function hojaEvolucionPdf() {
     .text('PRIMERITO TEXTO: ' + text, col + sep, row, {
       align: 'justify',
       ellipsis: true,
+      indent: 100,
       width: pdfTools.cmToPt(ancho)
     });
   row = doc.y + 10;
