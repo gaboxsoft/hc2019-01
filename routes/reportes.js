@@ -4,6 +4,7 @@ const Evolucion = require('../models/evolucion');
 const Receta = require('../models/receta');
 const OrdenesMedico = require('../models/ordenesMedico');
 const ConsentimientoInformado = require('../models/consentimientoInformado');
+const CartaConsent = require('../models/cartaConsent');
 
 const express = require('express');
 const app = express();
@@ -21,6 +22,7 @@ const hojaEvolucionPdf = require('../library/msiReportes/hojaEvolucionPdf');
 const recetaPdf = require('../library/msiReportes/recetaPdf');
 const ordenesMedicoPdf = require('../library/msiReportes/ordenesMedicoPdf');
 const consentimientoInfPdf = require('../library/msiReportes/consentimientoInfPdf');
+const cartaConsentPdf = require('../library/msiReportes/cartaConsentPdf');
 
 
 //app.get('/contrato', verificaToken, function(req, res) {
@@ -33,6 +35,37 @@ app.get('/msi00/:id', function (req, res) {
 
 
   return res.status(200).json({ ok: true, data: 'todo bien....' });
+});
+
+app.get('/msi01/:id', function (req, res) {
+
+  //id de paciente
+
+  console.log('generando carta consentimiento>>...............');
+  const id = req.params.id;
+  let token = req.get('token');
+  CartaConsent.findOne({ paciente: id }, (err, cartaConsentBD) => {
+    if (err) {
+      return res.status(400).
+        json({ ok: false, error: 'Error al generar formato carta consentimiento informado PDF ' + err });
+    };
+    if (!cartaConsentBD) {
+      return res.status(401).
+        json({ ok: false, error: 'Error al generar formato carta consetimiento informado PDF ' + err });
+    };
+    //console.log('EN REPORTE.JS GET MSI02', consentimientoInformadoBD)
+
+    let filePath = cartaConsentPdf(cartaConsentBD);
+
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-01', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+
+  }).populate('paciente');
+  //consentimientoInfPdf();
+
+  ////rpt.save('CMSI-00-contrato.pdf');
+
+
+  //return res.status(200).json({ ok: true, data: 'todo bien....' });
 });
 
 app.get('/msi02/:id', function (req, res) {
@@ -55,7 +88,7 @@ app.get('/msi02/:id', function (req, res) {
 
     let filePath = consentimientoInfPdf(consentimientoInformadoBD);
 
-    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-00', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-02', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
 
   }).populate('paciente');
   //consentimientoInfPdf();
