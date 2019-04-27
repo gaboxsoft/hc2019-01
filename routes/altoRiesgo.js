@@ -90,27 +90,7 @@ app.post('/altoRiesgo/:id', [verificaToken, rolAD], function (req, res) {
     if (!pacienteBD) {
       return res.status(401).json({ ok: false, error: 'NO ENCONTRÉ AL PACIENTE' });
     };
-    ///////////
-    //paciente: 
-    //lugarFirma: 
-    //fechaFirma: 
-    //identificacionPaciente: 
-    //numeroExpediente: 
-    //identificacionRepresentanteLegal: 
-    //nombreRepresentanteLegal: 
-    //estudio: 
     
-    //nombreResponsable: 
-    //firmaBase64Responsable: 
-    //nombreTestigo1: 
-    //identificacionTestigo1: 
-    //firmaBase64Testigo1: 
-    //nombreTestigo2: 
-    //identificacionTestigo2: 
-    //firmaBase64Testigo2: 
-    //medico:
-    //firmaBase64Medico: 
-    ///////////
     let altoRiesgo = new AltoRiesgo({
       paciente: id,
       lugarFirma: 'METEPEC, ESTADO DE MÉXICO',
@@ -122,18 +102,18 @@ app.post('/altoRiesgo/:id', [verificaToken, rolAD], function (req, res) {
       identificacionRepresentanteLegal: body.identificacionRepresentanteLegal,
       nombreRepresentanteLegal: body.nombreRepresentanteLegal,
 
-      estudio: body.estudio,
+      estudio: body.estudio, 
 
       nombreResponsable: body.nombreResponsable,
-      firmaBase64Responsable: body.firmaBase64Responsable,
+      firmaBase64Autoriza: body.firmaBase64Autoriza,
 
 
       nombreTestigo1: body.nombreTestigo1,
-      identificacionTestigo2: body.identificacionTestigo2,
+      identificacionTestigo1: body.identificacionTestigo1,
       firmaBase64Testigo1: body.firmaBase64Testigo1,
 
       nombreTestigo2: body.nombreTestigo2,
-      identificacionTestigo1: body.identificacionTestigo1,
+      identificacionTestigo2: body.identificacionTestigo2,
       firmaBase64Testigo2: body.firmaBase64Testigo2,
 
       medico: body.medico,
@@ -178,7 +158,7 @@ app.put('/altoRiesgo/:id', [verificaToken, rolADE], function (req, res) {
       return res.status(401).json({ ok: false, error: 'NO ENCONTRÉ AL PACIENTE' });
     };
 
-    body.diagnosticoEgreso = pacienteBD.diagnosticoEgreso;
+    
 
     AltoRiesgo.findOneAndUpdate({ paciente: id, 'situacionSe': { $eq: 1 } }, body, { new: true, runValidators: true, context: 'query' }, (err, altoRiesgoBD) => {
       if (err) {

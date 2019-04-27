@@ -52,7 +52,7 @@ let altoRiesgoSchema = new Schema({
     type: String,
     uppercase: true,
   },
-  firmaBase64Responsable: {
+  firmaBase64Autoriza: {
     type: String,
   },
 

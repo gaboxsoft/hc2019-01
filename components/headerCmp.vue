@@ -51,9 +51,9 @@
             <b-dropdown-item href="/MedicoTratante">Médicos Tratantes</b-dropdown-item>
             <b-dropdown-item href="#">Programación Quirúrgica</b-dropdown-item>
             <b-dropdown-item href="/ConsentimientoInformado">Consentimiento Anestésia</b-dropdown-item>
-            <b-dropdown-item href="#">Consentimiento Alto Riesgo</b-dropdown-item>
+            <b-dropdown-item href="/AltoRiesgo">Consentimiento Alto Riesgo</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="CIRUGÍA"
+          <b-nav-item-dropdown text="CIRUGÍA" 
                                right>
             <b-dropdown-item href="#">Registro Anestésia</b-dropdown-item>
             <b-dropdown-item href="#">Estudio Piezas Anatomopatológicas</b-dropdown-item>
