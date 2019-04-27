@@ -429,7 +429,7 @@
           this.$refs.notify.showNotify("ANTES DEBES AGREGAR Y GUARDAR LOS DATOS", 4);
           return;
         }
-        axios.get(process.env.urlServer + '/msi01/' + this.$store.state.pacienteId, {
+        axios.get(process.env.urlServer + '/msi03/' + this.$store.state.pacienteId, {
           headers: {
             token: this.getToken,
             Accept: 'application/pdf',
