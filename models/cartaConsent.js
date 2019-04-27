@@ -37,7 +37,7 @@ let cartaConsentSchema = new Schema({
     type: String,
     uppercase: true,
   },
-  diactosAnestesicos: {
+  actosAnestesicos: {
     type: String,
     uppercase: true,
   },

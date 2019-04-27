@@ -23,10 +23,10 @@
           <b-nav-item-dropdown text="VALORACIÓN"
                                left>
             <!--<b-dropdown-item disabled href="#">Consentimiento Informado</b-dropdown-item>-->
-            <b-dropdown-item href="/ConsentimientoInformado">Consentimiento Informado</b-dropdown-item>
             <b-dropdown-item href="/hojaInicialExpediente">Hoja Inicial Expediente</b-dropdown-item>
             <b-dropdown-item href="/HistoriaClinica">História Clínica</b-dropdown-item>
             <b-dropdown-item href="/notaUrgencias">Nota de Urgencias</b-dropdown-item>
+            <b-dropdown-item href="/CartaConsent">Carta de consentimiento informado</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="CUIDADOS"
                                right>
@@ -50,7 +50,7 @@
                                right>
             <b-dropdown-item href="/MedicoTratante">Médicos Tratantes</b-dropdown-item>
             <b-dropdown-item href="#">Programación Quirúrgica</b-dropdown-item>
-            <b-dropdown-item href="#">Consentimiento Anestésia</b-dropdown-item>
+            <b-dropdown-item href="/ConsentimientoInformado">Consentimiento Anestésia</b-dropdown-item>
             <b-dropdown-item href="#">Consentimiento Alto Riesgo</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="CIRUGÍA"
