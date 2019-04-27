@@ -10,10 +10,10 @@ moment.locale('es');
 
 
 const cartaConsentPdf = (cartaConsentBD) => {
-  console.log('1.- EN CARTA CONSENT INFO->', cartaConsentBD);
+  //console.log('1.- EN CARTA CONSENT INFO->', cartaConsentBD);
 
   let cc = cartaConsentBD;
-  console.log('EN CARTA CONSENT INFO->', cc);
+  //console.log('EN CARTA CONSENT INFO->', cc);
   let paciente = cc.paciente;
 
   const hojaCartaPort = [612, 792];

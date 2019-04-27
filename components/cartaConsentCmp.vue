@@ -440,8 +440,9 @@
           }
         }).then((response) => {
           this.cc = response.data.cartaConsent;
-          this.cc.fechaFirma = moment(this.cc.fechaFirma).format('YYYY-MM-DD HH:mm');
-          console.log('cc leido=', this.cc);
+          this.cc.fechaFirma = moment(this.cc.fechaFirma).format('YYYY-MM-DDTHH:mm:ss');
+          //console.log(this.cc.fechaFirma);
+          //console.log('cc leido=', this.cc);
         })
           .catch(err => {
             //this.cc = { fechaFirma: Date() };
