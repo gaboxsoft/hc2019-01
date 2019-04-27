@@ -5,9 +5,6 @@ const app = express();
 
 app.use(require('./login'));
 app.use(require('./usuario'));
-//app.use(require('./categoria'));
-//app.use(require('./producto'));
-//app.use(require('./upload'));
 app.use(require('./server'));
 app.use(require('./paciente'));
 app.use(require('./reportes'));
@@ -20,6 +17,7 @@ app.use(require('./ordenesMedico'));
 app.use(require('./contratoServicios'));
 app.use(require('./consentimientoInformado'));
 app.use(require('./cartaConsent'));
+app.use(require('./altoRiesgo'));
 
 
 
