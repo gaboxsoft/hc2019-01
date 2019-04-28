@@ -26,7 +26,7 @@ const ordenesMedicoPdf = require('../library/msiReportes/ordenesMedicoPdf');
 const consentimientoInfPdf = require('../library/msiReportes/consentimientoInfPdf');
 const cartaConsentPdf = require('../library/msiReportes/cartaConsentPdf');
 const altoRiesgoPdf = require('../library/msiReportes/altoRiesgoPdf');
-const altVoluntariaPdf = require('../library/msiReportes/altVoluntariaPdf');
+const altaVoluntariaPdf = require('../library/msiReportes/altaVoluntariaPdf');
 
 
 //app.get('/contrato', verificaToken, function(req, res) {
@@ -133,7 +133,7 @@ app.get('/msi03/:id', function (req, res) {
   //return res.status(200).json({ ok: true, data: 'todo bien....' });
 });
 
-app.get('/msi03/:id', function (req, res) {
+app.get('/msi04/:id', function (req, res) {
 
   //id de paciente
 

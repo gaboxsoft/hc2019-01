@@ -8,12 +8,12 @@ require('moment/locale/es');  // without this line it didn't work
 moment.locale('es');
 
 
-const altoRiesgoPdf = (altoRiesgoBD) => {
-  //console.log('1.- EN CONSENT ALTO RIESGO->', altoRiesgoBD);
+const altaVoluntariaPdf = (altaVoluntariaBD) => {
+  //console.log('1.- EN alta Voluntaria->', altaVoluntariaBD);
 
-  let ar = altoRiesgoBD;
-  //console.log('EN CONSENT ALTO RIESGO->', ar);
-  let paciente = ar.paciente;
+  let av = altaVoluntariaBD;
+  //console.log('EN alta Voluntaria->', av);
+  let paciente = av.paciente;
 
   const hojaCartaPort = [612, 792];
   const hojaCartaLan = [792, 612];
@@ -24,7 +24,7 @@ const altoRiesgoPdf = (altoRiesgoBD) => {
     //size: hojaCartaPort,
     margin: 0,
     info: {
-      Title: 'CONSENTIMIENTO INFORMADO ALTO RIESGO: msi-03 v1.0',
+      Title: 'CONSTANCIA ALTA VOLUNTARIA: msi-04 v1.0',
       Author: 'Clínica Médica San Isidro',
     }
   });
@@ -46,14 +46,14 @@ const altoRiesgoPdf = (altoRiesgoBD) => {
   const centroMedico = 'Médica San Isidro';
 
 
-  let imgFormato = path.resolve(__dirname, '../../msiformatos/msi03.jpg');
+  let imgFormato = path.resolve(__dirname, '../../msiformatos/msi04.jpg');
 
   doc.image(imgFormato, {
     fit: [anchoHoja, altoHoja]
   });
   const vacio = '';
 
-  let pathCfg = path.join(__dirname, './altoRiesgoFields.cfg');
+  let pathCfg = path.join(__dirname, './altaVoluntariaFields.cfg');
 
   let pages = JSON.parse(fs.readFileSync(pathCfg, 'utf-8').toString().replace(/\n|\r/g, "").trim());
 
@@ -67,8 +67,8 @@ const altoRiesgoPdf = (altoRiesgoBD) => {
 
   pages[0].forEach(function (field) {
     console.log('field-->', field, 'type->', field.type);
-    let medico = ar.medico;
-    let paciente = ar.paciente;
+    
+    let paciente = av.paciente;
     let domicilio = (paciente.calle || '') + ' ' +
       (paciente.numExterior || '') + ' ' + (paciente.numInterior || '') + (paciente.calle?', ' : '') +
       (paciente.colonia ? paciente.colonia + ',' : '') + (paciente.municipio ? paciente.municipio + ' ' : '') +
@@ -100,7 +100,7 @@ const altoRiesgoPdf = (altoRiesgoBD) => {
 
 
   // Stream contents to a file
-  const fileName = 'MSI03-' + Date.now() + '.pdf';
+  const fileName = 'MSI04-' + Date.now() + '.pdf';
   const filePath = path.join(__dirname, '../../public/pdfs/' + fileName);
 
 
@@ -183,4 +183,4 @@ function writeLine(doc, text, row, col, align, indent, fontSize, color, width, t
 ////  });
 ////}
 
-module.exports = altoRiesgoPdf;
+module.exports = altaVoluntariaPdf;
