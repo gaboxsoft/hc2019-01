@@ -20,7 +20,7 @@
               <tr :class="{'bg-warning':r._id===$store.state.recetaId}"
                   v-model="recetas"
                   v-for="r in recetas">
-                <td>{{momento(r.fechaReceta).format('DD-MMM-YYYY')}}</td>
+                <td>{{momento(r.fechaReceta).format('YYYY-MMM-DD')}}</td>
                 <td>{{momento(r.fechaReceta).format('HH:mm')}}</td>
                 <td>{{r.prescripcion}}</td>
                 <td>--{{r.usuarioSe.nombre}}--</td>

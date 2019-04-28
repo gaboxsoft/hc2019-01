@@ -20,9 +20,11 @@
         <tr :class="{'bg-warning':om._id===$store.state.ordenesMedicoId}"
             v-model="ordenesMedicos"
             v-for="om in ordenesMedicos">
-          <td>{{momento(om.fechaOrdenes).format('DD-MMM-YYYY')}}</td>
+          <td>{{momento(om.fechaOrdenes).format('YYYY-MMM-DD')}}</td>
+          <!--<td>{{om.fechaOrdenes}}</td>-->
 
           <td>{{momento(om.fechaOrdenes).format('HH:mm')}}</td>
+          <!--<td>{{om.fechaOrdenes}}</td>-->
 
           <td>{{om.ordenes}}</td>
 
@@ -138,10 +140,10 @@
             }
             else {
               this.ordenesMedicos = response.data.ordenesMedicos;
-              //for (var i = 0; i < this.ordenesMedicos.length; i++) {
-              //  //this.ordenesMedicos[i].fecha = moment(this.ordenesMedicos[i].fechaOrdenesMedico).format('ddd DD MMM YYYY HH:mm:ss');
+              for (var i = 0; i < this.ordenesMedicos.length; i++) {
+                this.ordenesMedicos[i].fechaOrdenes = moment(this.ordenesMedicos[i].fechaOrdenes).format('YYYY-MM-DDTHH:mm:ss');
               //  this.ordenesMedicos[i].fecha = moment(this.ordenesMedicos[i].fechaOrdenesMedico);
-              //}
+              }
               console.log(this.ordenesMedicos);
             }
           },

@@ -8,9 +8,9 @@
     "\\models",
     "\\msiformatos",
     "\\pages",
-    "\\plugins",
-    "\\routes"
+    "\\public",
+    "\\public\\pdfs"
   ],
-  "SelectedNode": "\\sube.bat",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }

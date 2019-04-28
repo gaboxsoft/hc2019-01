@@ -144,14 +144,14 @@
       },
     getFechaHora: function () {
       axios.get(process.env.urlServer + '/fechaHora', { headers: { token: this.getToken } })
-        .then((response) => { return response.data.fechaHora; },
+        .then((response) => { return moment(response.data.fechaHora).format('YYYY-MM-ddTHH:mm:ss'); },
           (error) => { this.err = error.response.data.error; return new Date(); });
     },
 
     InicializaEvolucion: function () {
       console.log(this.evolucion);
       this.evolucion._id = 'NUEVO';
-      this.evolucion.fecha = moment(this.getFechaHora()).format('YYYY-MM-DDTHH:mm:ss');
+      this.evolucion.fecha = moment(this.getFechaHora()).format('YYYY-MM-ddTHH:mm');
       this.evolucion.descripcion = '';
       this.getEvolucion.firmaBase64 = '';
       console.log(this.evolucion);
@@ -175,6 +175,7 @@
         .then((response) => {
           //console.log('ojo 22.-response.data en Evolucion: ', response.data);
           this.evolucion = response.data.evolucion;
+          console.log('fecha de GET evolución->', this.evolucion);
           this.evolucion.fecha = moment(this.evolucion.fecha).format('YYYY-MM-DDTHH:mm:ss');
           //this.evolucion.fecha = this.evolucion.fecha.toISOString().replace(/T/, ' ').replace(/\..+/, '');
 

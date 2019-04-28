@@ -68,9 +68,11 @@ const altoRiesgoPdf = (altoRiesgoBD) => {
   pages[0].forEach(function (field) {
     console.log('field-->', field, 'type->', field.type);
     let medico = ar.medico;
-    let domicilio = (ar.calle ? ar.calle + ' ' + (ar.numExterior || '') + ' ' + (ar.numInterior || '') + ', ' : '') +
-      (ar.colonia ? ar.colonia + ',' : '') + (ar.municipio ? ar.municipio + ' ' : '') +
-      (ar.entidad ? ar.entidad + ' ' : '') + (ar.CP ? ' CP' + ar.CP : '');
+    let paciente = ar.paciente;
+    let domicilio = (paciente.calle || '') + ' ' +
+      (paciente.numExterior || '') + ' ' + (paciente.numInterior || '') + (paciente.calle?', ' : '') +
+      (paciente.colonia ? paciente.colonia + ',' : '') + (paciente.municipio ? paciente.municipio + ' ' : '') +
+      (paciente.entidad ? paciente.entidad + ' ' : '') + (paciente.CP ? ' CP' + paciente.CP : '');
 
     writeLine(doc, eval(field.name), field.row, field.col, field.align, field.indent, field.fontSize, field.color, field.width, field.type);
   });

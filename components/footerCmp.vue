@@ -11,8 +11,8 @@
 
 <script>
   let axios = require('axios');
-  let date = require('date-and-time');
-  date.locale('es');
+  let moment = require('moment');
+  moment.locale('es');
   export default
     {
       name: 'footerCmp'
@@ -25,10 +25,15 @@
         }
       },
       computed: {
-
-        hoy: () => {
-          return date.format(new Date(), 'YYYY/MM/DD HH:mm:ss');
+        getFechaHora: function () {
+          axios.get(process.env.urlServer + '/fechaHora', { headers: { token: this.getToken } })
+            .then((response) => { return moment(response.data.fechaHora).format('YYYY-MM-ddTHH:mm:ss'); },
+              (error) => { this.err = error.response.data.error; return new Date(); });
         },
+        //hoy: () => {
+        //  //return date.format(new Date(), 'YYYY/MM/DD HH:mm:ss');
+        //  return getFechaHora();
+        //},
         getToken: function () {
           return this.$store.state.token;
         },

@@ -109,7 +109,7 @@
     methods: {
       getFechaHora: function () {
         axios.get(process.env.urlServer + '/fechaHora', { headers: { token: this.getToken } })
-          .then((response) => { return response.data.fechaHora; },
+          .then((response) => { return moment(response.data.fechaHora).format('YYYY-MM-DDTHH:mm:ss'); },
             (error) => { this.err = error.response.data.error; return new Date(); });
       },
 

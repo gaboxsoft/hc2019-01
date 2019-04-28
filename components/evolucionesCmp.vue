@@ -31,7 +31,7 @@
                   v-model="evoluciones"
                   v-for="e in evoluciones">
                 <!--<td>{{e._id}}</td>-->                
-                <td>{{momento(e.fecha).format('DD-MMM-YYYY')}}</td>
+                <td>{{momento(e.fecha).format('YYYY-MMM-DD')}}</td>
                 <td>{{momento(e.fecha).format('HH:mm')}}</td>
                 <td>{{e.descripcion}}</td>
                 <td>--{{e.usuarioSe.nombre}}--</td>
