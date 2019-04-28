@@ -6,34 +6,34 @@
     <notifyCmp ref="notify" />
     <b-btn class="bg-success button-right" v-show="estaFirmando!=true" v-on:click="firmar">GUARDAR</b-btn>
 
-    <form action="#">
-      <no-ssr>
+    
+     
         <table class="table table-sm table-bordered table-info ">
-          <tr>
-            <td style="width:10%;">FECHA-HORA</td>
-            <td>
-              EVOLUCIÓN
-            </td>
-            <td>
-              FIRMA
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="datetime-local" v-model="evolucion.fecha" name="fecha">
-            </td>
-            <td>
-              <!-- cols="50" rows="2" -->
-              <textarea class="input-text textarea-size" type="text" v-model="evolucion.descripcion" name="descripcion"></textarea>
-            </td>
-            <td width="20%">
-              <firmaCmp id="firma" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
-            </td>
-            <!--<b-btn class="bg-success " v-on:click="guardar">GUARDAR</b-btn>-->
-          </tr>
+          <tbody>
+            <tr>
+              <td style="width:10%;">FECHA-HORA</td>
+              <td>
+                EVOLUCIÓN
+              </td>
+              <td>
+                FIRMA
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="datetime-local" v-model="evolucion.fecha" name="fecha">
+              </td>
+              <td>
+                <!-- cols="50" rows="2" -->
+                <textarea class="input-text textarea-size" type="text" v-model="evolucion.descripcion" name="descripcion"></textarea>
+              </td>
+              <td width="20%">
+                <firmaCmp id="firma" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
+              </td>
+              <!--<b-btn class="bg-success " v-on:click="guardar">GUARDAR</b-btn>-->
+            </tr>
+          </tbody>
         </table>
-      </no-ssr>
-    </form>
   </div>
 </template>
 <script>
@@ -100,7 +100,11 @@
     seFirmo: function () {
       //console.log(' --- EN nota urgencias-> ' + (!(this.firmaBase64 === '') ? 'FIRMADO!' : "NO FIRMADO"));
       //console.log(' ---- EN nota urgencias-> ' + this.firmaBase64);
-      this.guardar();
+      if (this.seFirmo) {
+        this.guardar();
+        return;
+      }
+      this.firmar();
       
     },
     getEvolucionId: function () {
@@ -140,6 +144,12 @@
     methods: {
       firmar: function () {
         this.estaFirmando = true;
+        //
+        //No appendchild por que no se moverá
+        //document.getElementById('firmaPaciente').appendChild(document.getElementById('firmaX'));
+        
+        this.firmaBase64 = '';
+        document.getElementById('btnIniciarFirma').click();
 
       },
     getFechaHora: function () {

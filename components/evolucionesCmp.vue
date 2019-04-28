@@ -30,9 +30,10 @@
               <tr :class="{'bg-warning':e._id===$store.state.evolucionId}"
                   v-model="evoluciones"
                   v-for="e in evoluciones">
-                <!--<td>{{e._id}}</td>-->                
-                <td>{{momento(e.fecha).format('YYYY-MMM-DD')}}</td>
-                <td>{{momento(e.fecha).format('HH:mm')}}</td>
+                <!--<td>{{e._id}}</td>-->
+                <td>{{e.fecha}}</td>
+                <!--<td>{{momento(e.fecha).format('YYYY-MMM-DD')}}</td>
+                <td>{{momento(e.fecha).format('HH:mm')}}</td>-->
                 <td>{{e.descripcion}}</td>
                 <td>--{{e.usuarioSe.nombre}}--</td>
                 <td>
@@ -187,7 +188,7 @@
             else {
               this.evoluciones = response.data.evoluciones;
               for (var i = 0; i < this.evoluciones.length; i++) {
-                this.evoluciones[i].fecha = moment(this.evoluciones[i].fecha).format('ddd DD MMM YYYY HH:mm:ss');
+                this.evoluciones[i].fecha = moment(this.evoluciones[i].fecha).format('YYYY-MMM-DD HH:mm');//'ddd DD MMM YYYY HH:mm:ss');
               }
             }
             console.log('24.-final this.evoluciones: ', this.evoluciones);

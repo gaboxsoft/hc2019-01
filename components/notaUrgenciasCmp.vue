@@ -3,7 +3,7 @@
   <div>
     <!--<h1 class=" text-primary">{{tituloPagina}}</h1>-->
     <notifyCmp ref="notify" />
-    <firmaCmp id="firma" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
+    <firmaCmp id="firmax" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
     <b-btn class="bg-success button-right" v-show="estaFirmando!=true" v-on:click="firmar">GUARDAR</b-btn>
 
     <form action="#">
@@ -171,7 +171,11 @@
     methods: {
       firmar: function () {
         this.estaFirmando = true;
-        
+        //
+        //No appendchild por que no se moverá
+        //document.getElementById('firmaPaciente').appendChild(document.getElementById('firmaX'));
+        this.firmaBase64 = '';
+        document.getElementById('btnIniciarFirma').click();
       },
       getFechaHora: function () {
         axios.get(process.env.urlServer + '/fechaHora', { headers: { token: this.getToken } })

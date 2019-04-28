@@ -26,6 +26,7 @@
                 <td>--{{r.usuarioSe.nombre}}--</td>
                 <td width="20%">
                   <img v-bind:src="firma(r.firmaBase64)" width="100" height="20" />
+
                 </td>
                 <td style="width:25px;">
                   <b-btn btn-xs v-show="r.usuarioSe._id===$store.state.usuarioId"
@@ -33,6 +34,7 @@
                     Sel
                   </b-btn>
                   <b-btn class="bg-success button-right" v-on:click="imprimir(r._id)">IMPRIMIR</b-btn>
+
                 </td>
               </tr>
             </tbody>

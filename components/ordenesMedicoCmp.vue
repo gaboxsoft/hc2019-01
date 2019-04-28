@@ -2,7 +2,7 @@
 <template>
   <div>
     <notifyCmp ref="notify" />
-    <form action="#">
+    
       <table class="table table-sm table-bordered table-info ">
         <tbody>
 
@@ -22,7 +22,10 @@
             </td>
             <td>
               <!--<textarea class="input-text textarea-size" type="text" v-model="ordenesMedico.ordenes" name="ordenes" rows="10" cols="50"></textarea>-->
-              <firmaCmp @firmaCapturada="firmaBase64=$event" />
+              <!--<firmaCmp @firmaCapturada="firmaBase64=$event" />-->
+              <b-btn class="bg-success button-right" v-show="estaFirmando!=true" v-on:click="firmar">GUARDAR</b-btn>
+
+              <firmaCmp id="firmax" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
               <!--<span><b-btn class="bg-success button-right" v-on:click="guardar">GUARDAR</b-btn></span>-->
             </td>
           </tr>
@@ -30,7 +33,7 @@
         </tbody>
       </table>
 
-    </form>
+    
   </div>
 </template>
 <script>
@@ -52,6 +55,8 @@
         firmaBase64: '',
         paciente: {},
         ordenesMedico: {},
+        estaFirmando: false,
+
       }
     },
 
@@ -107,15 +112,25 @@
     },
 
     methods: {
+
+      firmar: function () {
+        this.estaFirmando = true;
+        //
+        //No appendchild por que no se moverá
+        //document.getElementById('firmaPaciente').appendChild(document.getElementById('firmaX'));
+        this.firmaBase64 = '';
+        document.getElementById('btnIniciarFirma').click();
+      },
+
       getFechaHora: function () {
         axios.get(process.env.urlServer + '/fechaHora', { headers: { token: this.getToken } })
-          .then((response) => { return moment(response.data.fechaHora).format('YYYY-MM-DDTHH:mm:ss'); },
+          .then((response) => { return moment(response.data.fechaHora); },
             (error) => { this.err = error.response.data.error; return new Date(); });
       },
 
       InicializaOrdenesMedico: function () {
         this.ordenesMedico._id = 'NUEVO';
-        this.ordenesMedico.fechaOrdenes = moment(this.getFechaHora()).format('YYYY-MM-DDTHH:mm:ss');
+        this.ordenesMedico.fechaOrdenes = this.getFechaHora(); //moment(this.getFechaHora()).format('YYYY-MM-DDTHH:mm:ss');
         this.ordenesMedico.ordenes = '';
         this.getOrdenesMedico.firmaBase64 = '';
         console.log('ORDENES INICIALIZADA', this.ordenesMedico);
@@ -191,7 +206,8 @@
               this.$store.commit('setHuboCambio');
               this.firmaBase64 = '';
               //this.$store.commit('setFirmaBase64', '');
-              this.$refs.notify.showNotify("firma guardada!!!! ", 2);
+              this.$refs.notify.showNotify("DOCUMENTO GUARDADO ", 3);
+              this.estaFirmando = false;
             })
             .catch(err => {
               console.log('err', err);

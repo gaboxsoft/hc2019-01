@@ -3,7 +3,7 @@
   <div>
     <notifyCmp ref="notify" />
 
-    <form action="#">
+    
       <table class="table table-sm table-bordered table-info ">
         <tbody>
 
@@ -32,7 +32,6 @@
         </tbody>
       </table>
 
-    </form>
   </div>
 </template>
 <script>
@@ -114,7 +113,11 @@
     methods: {
       firmar: function () {
         this.estaFirmando = true;
-
+        //
+        //No appendchild por que no se moverá
+        //document.getElementById('firmaPaciente').appendChild(document.getElementById('firmaX'));
+        this.firmaBase64 = '';
+        document.getElementById('btnIniciarFirma').click();
       },
       getFechaHora: function () {
         axios.get(process.env.urlServer + '/fechaHora', { headers: { token: this.getToken } })
