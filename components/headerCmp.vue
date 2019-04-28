@@ -55,18 +55,18 @@
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="CIRUGÍA" 
                                right>
-            <b-dropdown-item href="#">Registro Anestésia</b-dropdown-item>
-            <b-dropdown-item href="#">Estudio Piezas Anatomopatológicas</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Registro Anestésia</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Estudio Piezas Anatomopatológicas</b-dropdown-item>
             <b-dropdown-item href="/ordenesMedico">Órdenes Médico</b-dropdown-item>
             <b-dropdown-item href="/Evolucion">Hoja Evolución Paciente</b-dropdown-item>
             <b-dropdown-item href="#">Hoja Quirúgica</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="EGRESO"
                                right>
-            <b-dropdown-item href="#">Por Mejoría</b-dropdown-item>
-            <b-dropdown-item href="#">Por Voluntario</b-dropdown-item>
-            <b-dropdown-item href="#">Por Traslado</b-dropdown-item>
-            <b-dropdown-item href="#">Por Defunción</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Por Mejoría</b-dropdown-item>
+            <b-dropdown-item href="/AltaVoluntaria ">Voluntario</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Por Traslado</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Por Defunción</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown v-show="rol==='ADMIN_ROL'" text="ADMIN" right>
             <b-dropdown-item href="/UsuariosPage">Usuarios</b-dropdown-item>

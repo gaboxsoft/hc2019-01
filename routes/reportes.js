@@ -6,6 +6,7 @@ const OrdenesMedico = require('../models/ordenesMedico');
 const ConsentimientoInformado = require('../models/consentimientoInformado');
 const CartaConsent = require('../models/cartaConsent');
 const AltoRiesgo = require('../models/altoRiesgo');
+const AltaVoluntaria = require('../models/altaVoluntaria');
 
 const express = require('express');
 const app = express();
@@ -25,6 +26,7 @@ const ordenesMedicoPdf = require('../library/msiReportes/ordenesMedicoPdf');
 const consentimientoInfPdf = require('../library/msiReportes/consentimientoInfPdf');
 const cartaConsentPdf = require('../library/msiReportes/cartaConsentPdf');
 const altoRiesgoPdf = require('../library/msiReportes/altoRiesgoPdf');
+const altVoluntariaPdf = require('../library/msiReportes/altVoluntariaPdf');
 
 
 //app.get('/contrato', verificaToken, function(req, res) {
@@ -123,6 +125,36 @@ app.get('/msi03/:id', function (req, res) {
     return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-03', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
 
   }).populate('paciente').populate('medico');
+  //consentimientoInfPdf();
+
+  ////rpt.save('CMSI-00-contrato.pdf');
+
+
+  //return res.status(200).json({ ok: true, data: 'todo bien....' });
+});
+
+app.get('/msi03/:id', function (req, res) {
+
+  //id de paciente
+
+  console.log('generando  alta voluntaria>>...............');
+  const id = req.params.id;
+  let token = req.get('token');
+  AltaVoluntaria.findOne({ paciente: id }, (err, altaVoluntariaBD) => {
+    if (err) {
+      return res.status(400).
+        json({ ok: false, error: 'Error al generar formato consentimiento alto riesgo PDF ' + err });
+    };
+    if (!altaVoluntariaBD) {
+      return res.status(401).
+        json({ ok: false, error: 'Error al generar formato  consetimiento alto riesgo PDF ' + err });
+    };
+
+    let filePath = altaVoluntariaPdf(altaVoluntariaBD);
+
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-03', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+
+  }).populate('paciente');
   //consentimientoInfPdf();
 
   ////rpt.save('CMSI-00-contrato.pdf');
