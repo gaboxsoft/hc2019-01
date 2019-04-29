@@ -19,6 +19,7 @@ app.use(require('./consentimientoInformado'));
 app.use(require('./cartaConsent'));
 app.use(require('./altoRiesgo'));
 app.use(require('./altaVoluntaria'));
+app.use(require('./responsivaRN'));
 
 
 
