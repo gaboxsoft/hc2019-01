@@ -58,6 +58,7 @@ app.post('/ResponsivaRN/:id', [verificaToken, rolAD], function (req, res) {
       lugarFirma: 'METEPEC, ESTADO DE MÉXICO',
       fechaFirma: body.fechaFirma,
 
+      nombreRN: body.nombreRN,
       sexoRN: body.sexoRN,
       fechaNacimientoRN: body.fechaNacimientoRN,
 
@@ -65,6 +66,7 @@ app.post('/ResponsivaRN/:id', [verificaToken, rolAD], function (req, res) {
       firmaBase64Madre: body.firmaBase64Madre,
 
       nombreAutoriza: body.nombreAutoriza,
+      parentescoAutoriza: body.parentescoAutoriza,
       firmaBase64Autoriza: body.firmaBase64Autoriza,
 
       nombreQuienEntregaRN: body.nombreQuienEntregaRN,

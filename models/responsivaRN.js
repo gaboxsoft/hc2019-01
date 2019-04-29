@@ -21,7 +21,13 @@ let responsivaRNSchema = new Schema({
 
   fechaFirma: {
     type: Date
-  },  
+  },
+
+  nombreRN: {
+    type: String,
+    uppercase: true,
+  },
+
   sexoRN: {
     type: String,
     enum: generoValido,
@@ -93,5 +99,5 @@ let responsivaRNSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('ResponsivaRNSchema', responsivaRNSchema);
+module.exports = mongoose.model('ResponsivaRN', responsivaRNSchema);
 

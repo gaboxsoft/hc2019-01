@@ -44,7 +44,7 @@
             <b-dropdown-item href="/Evolucion">Hoja de Evolución Paciente</b-dropdown-item>
             <b-dropdown-item href="#">Historia Clínica Recién Nacido</b-dropdown-item>
             <b-dropdown-item disabled href="#">Registro Clínico Meonatolgía</b-dropdown-item>
-            <b-dropdown-item href="#">Responsiva Mamá</b-dropdown-item>
+            <b-dropdown-item href="/responsivaRN">Responsiva Mamá - Recién nacido</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="PROC.QUIRÚGICO"
                                right>

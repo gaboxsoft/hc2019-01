@@ -7,6 +7,7 @@ const ConsentimientoInformado = require('../models/consentimientoInformado');
 const CartaConsent = require('../models/cartaConsent');
 const AltoRiesgo = require('../models/altoRiesgo');
 const AltaVoluntaria = require('../models/altaVoluntaria');
+const ResponsivaRN = require('../models/responsivaRN');
 
 const express = require('express');
 const app = express();
@@ -27,6 +28,7 @@ const consentimientoInfPdf = require('../library/msiReportes/consentimientoInfPd
 const cartaConsentPdf = require('../library/msiReportes/cartaConsentPdf');
 const altoRiesgoPdf = require('../library/msiReportes/altoRiesgoPdf');
 const altaVoluntariaPdf = require('../library/msiReportes/altaVoluntariaPdf');
+const responsivaRNPdf = require('../library/msiReportes/responsivaRNPdf');
 
 
 //app.get('/contrato', verificaToken, function(req, res) {
@@ -387,6 +389,33 @@ app.get('/msi15/:id', function (req, res) {
     });
 
 });
+
+
+app.get('/msi42/:id', function (req, res) {
+
+  //id de paciente
+
+  console.log('generando  responsiva RN>>...............');
+  const id = req.params.id;
+  let token = req.get('token');
+  ResponsivaRN.findOne({ paciente: id }, (err, responsivaRNBD) => {
+    if (err) {
+      return res.status(400).
+        json({ ok: false, error: 'Error al generar formato Responsiva Recién Nacido PDF ' + err });
+    };
+    if (!responsivaRNBD) {
+      return res.status(401).
+        json({ ok: false, error: 'Error al generar formato Responsiva Recién Nacido PDF ' + err });
+    };
+
+    let filePath = responsivaRNPdf(responsivaRNBD);
+
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-42', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+
+  }).populate('paciente');
+  
+});
+
 
 
 module.exports = app;
