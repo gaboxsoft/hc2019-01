@@ -4,11 +4,9 @@
     "\\components",
     "\\library",
     "\\library\\msiReportes",
-    "\\middleware",
     "\\models",
     "\\msiformatos",
     "\\pages",
-    "\\public",
     "\\routes"
   ],
   "SelectedNode": "\\sube.bat",

@@ -56,7 +56,7 @@
           <b-nav-item-dropdown text="CIRUGÍA" 
                                right>
             <b-dropdown-item disabled href="#">Registro Anestésia</b-dropdown-item>
-            <b-dropdown-item disabled href="#">Estudio Piezas Anatomopatológicas</b-dropdown-item>
+            <b-dropdown-item href="SolicitudPiezas">Estudio Piezas Anatomopatológicas</b-dropdown-item>
             <b-dropdown-item href="/ordenesMedico">Órdenes Médico</b-dropdown-item>
             <b-dropdown-item href="/Evolucion">Hoja Evolución Paciente</b-dropdown-item>
             <b-dropdown-item href="#">Hoja Quirúgica</b-dropdown-item>
