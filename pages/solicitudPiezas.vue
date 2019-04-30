@@ -3,22 +3,25 @@
   <div>
     <h2 class="text-primary text-center">{{tituloPagina}}</h2>
     <div>
-      <trazosFiguraHumanaCmp></trazosFiguraHumanaCmp>
+      <solicitudPiezasCmp></solicitudPiezasCmp>
+      <!--<trazosFiguraHumanaCmp></trazosFiguraHumanaCmp>-->
     </div>
   </div>
 
 
 </template>
 <script>
+  import solicitudPiezasCmp from '~/components/solicitudPiezasCmp';
   import trazosFiguraHumanaCmp from '~/components/trazosFiguraHumanaCmp';
   export default {
     name: 'solicitudPiezas',
     components: {
+      solicitudPiezasCmp,
       trazosFiguraHumanaCmp
     },
     data() {
       return {
-        tituloPagina: 'SOLICITUD PIEZAS ANATOMOPATOLÓGICAS'
+        tituloPagina: 'SOLICITUD ESTUDIO Y DISPOSICIÓN DE PIEZAS ANATOMOPATOLÓGICAS'
       }
     },
     mounted() {
@@ -28,9 +31,6 @@
     },
 
     created() {
-
-
-      //this.sobreponer();
       // No hay sesion abierta, redirige a login
       if (this.$store.state.token === 'NONE') {
         this.$router.push({ name: 'login' })

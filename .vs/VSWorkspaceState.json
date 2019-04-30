@@ -5,9 +5,8 @@
     "\\library",
     "\\library\\msiReportes",
     "\\models",
-    "\\msiformatos",
     "\\pages",
-    "\\routes"
+    "\\public"
   ],
   "SelectedNode": "\\sube.bat",
   "PreviewInSolutionExplorer": false

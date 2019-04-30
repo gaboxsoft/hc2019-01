@@ -3,32 +3,23 @@
   <div>
 
     <!--<button id="btnDibuja" name="dibujaBtn" v-on:click="dibujaFiguraHumana()">MUESTRA FIGURA HUMANA</button>
-  <br />-->
+    <br />-->
     <!--<img id="scream" style="display: none;" src="~/../msiformatos/figuraHumana.png" alt="figuraHumana" height="200">-->
-    
     <!--<br />-->
     <!--<p id="estado"></p>
-  <br />-->
+    <br />-->
     <!--<button id="btnMostrar" name="mostrarBtn" v-on:click="getTrazosFiguraHumana()">MOSTRAR CAPTURA</button>-->
 
-    <div>
-      <table>
-        <tbody>
-          <tr>
-            <td class="text-center">
-              <button id="btnLimpiar" name="limpiarBtn" v-on:click="limpiarTrazosFiguraHumana()">LIMPIAR TRAZOS</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <canvas id="pizarra" @mouseleave="mouseLeavePizarra" @mouseover="mouseOverPizarra" style="width: 300px;height: 300px;background-color: black;"></canvas>
-            </td>
-            <!--<td>
-          <img id="imagenCapturada" src="" width="300" height="300" />
-        </td>-->
-          </tr>
-        </tbody>
-      </table>
+    <div align="center">
+
+
+      <button id="btnLimpiar" name="limpiarBtn" v-on:click="limpiarTrazosFiguraHumana()">LIMPIAR TRAZOS</button>
+      <br />
+      <canvas id="pizarra" @mouseleave="mouseLeavePizarra" @mouseover="mouseOverPizarra" style="width: 300px;height: 300px;background-color: black;"></canvas>
+
+      <!--<td>
+        <img id="imagenCapturada" src="" width="300" height="300" />
+      </td>-->
       <!--<table>
         <tbody>
 
@@ -39,17 +30,17 @@
           </tr>
         </tbody>
       </table>-->
-
-      <img id="imgFiguraHumana" style="display: none;" src="~/../msiformatos/figuraHumana.png" alt="figuraHumana" height="200">
       <!--<p>
-    IMG64-><br />
+                IMG64-><br />
 
-  </p>
-  -->
+              </p>
+      -->
 
 
     </div>
-
+    <!--style="display: none;"-->
+    <img id="imgFiguraHumana" style="display: none;" src="~/../msiformatos/figuraHumana.png" alt="figuraHumana" height="200">
+   
 
   </div>
 </template>
@@ -60,9 +51,10 @@
     components: {
 
     },
+    props: ['imgBase64Original'],
     data() {
       return {
-        primeraVez:true,
+        primeraVez: true,
         imgBase64: ''
       }
     },
@@ -87,6 +79,9 @@
 
     methods: {
       dibujaFiguraHumana: function () {
+        //console.log('img original: ', this.imgBase64Original)
+        var f = document.getElementById("imgFiguraHumana");
+        f.source = "data:image/png;base64," + this.imgBase64Original;
         var c = document.getElementById("pizarra");
         var ctx = c.getContext("2d");
         var img = document.getElementById("imgFiguraHumana");
@@ -103,13 +98,15 @@
         var canvas = document.getElementById("pizarra");
         this.imgBase64 = canvas.toDataURL();
         var imageElement = document.getElementById("imagenCapturada");
-        if (imageElement) {
-          imageElement.src = this.imgBase64;
-        };
+        //if (!imageElement) {
+        //  imageElement.src = this.imgBase64;
+        //};
         this.imgBase64 = this.imgBase64.slice(this.imgBase64.indexOf(',') + 1);
+        this.$emit('trazosCapturados', this.imgBase64);
+        
       },
       limpiarTrazosFiguraHumana() {
-        lineas = [];        
+        lineas = [];
         this.dibujaFiguraHumana();
         this.getTrazosFiguraHumana();
       },

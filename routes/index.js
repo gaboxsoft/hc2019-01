@@ -20,6 +20,7 @@ app.use(require('./cartaConsent'));
 app.use(require('./altoRiesgo'));
 app.use(require('./altaVoluntaria'));
 app.use(require('./responsivaRN'));
+app.use(require('./solicitudPiezas'));
 
 
 

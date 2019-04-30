@@ -262,7 +262,7 @@
         };
         axios(req)
           .then((response) => {
-            //console.log('En guardar hie-- success---->>> pasé ', response.data);
+            
             this.$refs.notify.showNotify("DOCUMENTO GUARDADO", 2.5);
             this.$store.commit('setSocketDatosGenerales');
 
