@@ -1,4 +1,5 @@
 const SolicitudPiezas = require('../models/solicitudPiezas');
+
 const Paciente = require('../models/paciente');
 
 const express = require('express');
@@ -7,6 +8,9 @@ const app = express();
 const _ = require('underscore');
 
 let { verificaToken, verificaAdminRol, rolADE, rolAD } = require('../middleware/autenticacion');
+
+
+
 //app.get('/paciente/:id', verificaToken, function (req, res) {
 app.get('/SolicitudPiezas/:id', function (req, res) {
   const id = req.params.id; // Id del paciente
@@ -21,6 +25,8 @@ app.get('/SolicitudPiezas/:id', function (req, res) {
     if (!solicitudPiezasBD) {
       return res.status(401).json({ ok: false, mensaje: 'No existe este solicitud de estudio' });
     }
+                                    
+    
 
     return res.json({ ok: true, solicitudPiezas: solicitudPiezasBD });
   //}).populate('paciente').populate('medicoAnestesiologo');
@@ -100,7 +106,7 @@ app.put('/SolicitudPiezas/:id', [verificaToken, rolADE], function (req, res) {
   body.usuario = req.usuario._id;
   body.fechaModificacion = Date.now();
 
-  console.log('3.- PUT this.ci= ', body);
+  //console.log('3.- PUT this.ci= ', body);
 
 
   //Paciente.findByIdAndUpdate(id, { diagnosticoEgreso: body.diagnosticoEgreso }, (err, pacienteBD) => {

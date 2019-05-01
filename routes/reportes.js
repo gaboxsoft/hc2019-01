@@ -8,6 +8,9 @@ const CartaConsent = require('../models/cartaConsent');
 const AltoRiesgo = require('../models/altoRiesgo');
 const AltaVoluntaria = require('../models/altaVoluntaria');
 const ResponsivaRN = require('../models/responsivaRN');
+const SolicitudPiezas = require('../models/SolicitudPiezas');
+
+
 
 const express = require('express');
 const app = express();
@@ -29,6 +32,7 @@ const cartaConsentPdf = require('../library/msiReportes/cartaConsentPdf');
 const altoRiesgoPdf = require('../library/msiReportes/altoRiesgoPdf');
 const altaVoluntariaPdf = require('../library/msiReportes/altaVoluntariaPdf');
 const responsivaRNPdf = require('../library/msiReportes/responsivaRNPdf');
+const solicitudPiezasPdf = require('../library/msiReportes/solicitudPiezasPdf');
 
 
 //app.get('/contrato', verificaToken, function(req, res) {
@@ -389,6 +393,34 @@ app.get('/msi15/:id', function (req, res) {
     });
 
 });
+
+
+app.get('/msi22/:id', function (req, res) {
+
+  //id de paciente
+
+  console.log('generando Solcitus de estudios>>...............');
+  const id = req.params.id;
+  let token = req.get('token');
+  SolicitudPiezas.findOne({ paciente: id }, (err, solicitudPiezasBD) => {
+    if (err) {
+      return res.status(400).
+        json({ ok: false, error: 'Error al generar formato carta consentimiento informado PDF ' + err });
+    };
+    if (!solicitudPiezasBD) {
+      return res.status(401).
+        json({ ok: false, error: 'Error al generar formato carta consetimiento informado PDF ' + err });
+    };
+    //console.log('EN REPORTE.JS GET MSI02', consentimientoInformadoBD)
+
+    let filePath = solicitudPiezasPdf(solicitudPiezasBD);
+
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-22', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+
+  }).populate('paciente');
+  
+});
+
 
 
 app.get('/msi42/:id', function (req, res) {

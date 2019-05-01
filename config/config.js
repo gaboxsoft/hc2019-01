@@ -40,7 +40,7 @@ process.env.SEED = process.env.SEED || "este-es-el-seed-de-desarrollo";
 
 
 // caducidad seed
-process.env.CADUCIDAD = process.env.CADUCIDAD || 1000 * 60 * 60 * 24 * 30; //60segs*60mins*24horas*30dias
+process.env.CADUCIDAD = process.env.CADUCIDAD || 1000 * 60 * 60 * 24 * 30; //1000 milisegundos*60segs*60mins*24horas*30dias
 //process.env.CADUCIDAD = process.env.CADUCIDAD || 1000 * 5; //1000 milisegundos=1seg => 1hra = 1000*60segs*60mins
 
 /*

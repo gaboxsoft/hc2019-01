@@ -50,7 +50,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 
-// limite de transferencia en body
+// FIX- Payload Too Large ERROR: limite de transferencia en body
 
 //app.use(bodyParser.json({ limit: '1000mb', extended: true }))
 //app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }))

@@ -62,20 +62,18 @@
       script.setAttribute('src', 'figuraHumana.js');
       document.head.appendChild(script);
 
-      
-
     },
 
     // esta chingón. Ejecuta un avez que se estima ya se ha renderizado el DOM 
     updated:
-      function () {
-        this.mouseOverPizarra();
-      },
-    //  debounce(function () {
-    //  this.$nextTick(() => {
-    //    this.mouseOverPizarra(); // runs only once
-    //  })
-    //}, 250),
+      //function () {
+      //  this.mouseOverPizarra();
+      //},
+      debounce(function () {
+      this.$nextTick(() => {
+        this.mouseOverPizarra(); // runs only once
+      })
+    }, 250),
   
   methods: {
     getBase64ToDisplay: function (imgBase64) {

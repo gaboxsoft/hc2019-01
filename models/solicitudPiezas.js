@@ -69,7 +69,6 @@ let solicitudPiezasSchema = new Schema({
 
   firmaBase64MedicoTratante: {
     type: String,
-    uppercase: true,
   },
 
   nombreEnfermera: {
@@ -78,7 +77,6 @@ let solicitudPiezasSchema = new Schema({
   },
   firmaBase64Enfermera: {
     type: String,
-    uppercase: true,
   },
 
   nombreER: {
@@ -87,7 +85,6 @@ let solicitudPiezasSchema = new Schema({
   },
   firmaBase64ER: {
     type: String,
-    uppercase: true,
   },
   /////////////////////////
   // Sello
