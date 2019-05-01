@@ -48,12 +48,19 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const bodyParser = require('body-parser');
+
+
+// limite de transferencia en body
+
+//app.use(bodyParser.json({ limit: '1000mb', extended: true }))
+//app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }))
+
 // parse application/x-www-form-urlencoded
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.urlencoded({ limit: '500mb' , extended: true }));
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '500mb' }));
+
+
 
 //Habilitar la carpeta public
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -62,12 +69,6 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 // Define el puerto default para escuhcar peticiones de express
 app.set('port', process.env.PORT);
 
-// limite de transferencia
-//app.use(bodyParser.json({ limit: '1000mb', extended: true }))
-//app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }))
-
-app.use(express.json({ limit: '500mb' }));
-app.use(express.urlencoded({ limit: '500mb' }));
 
 
 // Import and Set Nuxt.js options

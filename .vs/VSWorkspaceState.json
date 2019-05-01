@@ -7,8 +7,10 @@
     "\\models",
     "\\msiformatos",
     "\\pages",
-    "\\public"
+    "\\public",
+    "\\routes",
+    "\\server"
   ],
-  "SelectedNode": "\\public\\figuraHumana.js",
+  "SelectedNode": "\\sube.bat",
   "PreviewInSolutionExplorer": false
 }
