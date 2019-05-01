@@ -62,6 +62,13 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 // Define el puerto default para escuhcar peticiones de express
 app.set('port', process.env.PORT);
 
+// limite de transferencia
+//app.use(bodyParser.json({ limit: '1000mb', extended: true }))
+//app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }))
+
+app.use(express.json({ limit: '500mb' }));
+app.use(express.urlencoded({ limit: '500mb' }));
+
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')

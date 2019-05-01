@@ -10,7 +10,7 @@
     </div>-->
     <div>
       <p>Image to use:</p>
-      <img id="scream" style="display: none;" src="~/../msiformatos/figuraHumana.png" alt="figuraHumana" height="200"></img>
+      <img id="scream" style="display: none;" src="~/../msiFormatos/FiguraHumana.png" alt="figuraHumana" height="200"></img>
 
       <p>Canvas:</p>
       <canvas id="myCanvas" width="300" height="300" style="border:1px solid #d3d3d3;">

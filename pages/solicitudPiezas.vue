@@ -12,12 +12,10 @@
 </template>
 <script>
   import solicitudPiezasCmp from '~/components/solicitudPiezasCmp';
-  import trazosFiguraHumanaCmp from '~/components/trazosFiguraHumanaCmp';
   export default {
     name: 'solicitudPiezas',
     components: {
       solicitudPiezasCmp,
-      trazosFiguraHumanaCmp
     },
     data() {
       return {

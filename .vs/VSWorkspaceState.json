@@ -5,9 +5,10 @@
     "\\library",
     "\\library\\msiReportes",
     "\\models",
+    "\\msiformatos",
     "\\pages",
     "\\public"
   ],
-  "SelectedNode": "\\sube.bat",
+  "SelectedNode": "\\public\\figuraHumana.js",
   "PreviewInSolutionExplorer": false
 }
