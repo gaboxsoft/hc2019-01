@@ -12,59 +12,7 @@ moment.locale('es');
 const solicitudPiezasPdf = (solicitudPiezasBD) => {
 
 
-  {
-    /*
-     ,
-    {
-      "name": "sp.firmaBase64Testigo1",
-      "row": 20.7,
-      "col": 7,
-      "type": "img",
-      "width": 200
-    },
 
-
-    {
-      "name": "(sp.nombreTestigo1||'')",
-      "row": 22.35,
-      "col": 3,
-      "align": "left",
-      "fontSize": 9,
-      "color": "black"
-    },
-    {
-      "name": "(sp.edadTestigo1||'')",
-      "row": 22.9,
-      "col": 2.5,
-      "align": "left",
-      "fontSize": 9,
-      "color": "black"
-    },
-    {
-      "name": "(sp.parentescoTestigo1||'')",
-      "row": 22.9,
-      "col": 8,
-      "align": "left",
-      "fontSize": 9,
-      "color": "black"
-    },
-    {
-      "name": "(sp.domicilioTestigo1||'')",
-      "row": 23.45,
-      "col": 3,
-      "align": "left",
-      "fontSize": 9,
-      "color": "black"
-    },
-    {
-      "name": "sp.firmaBase64Testigo2",
-      "row": 25,
-      "col": 7,
-      "type": "img",
-      "width": 200
-    }
-     */ 
-  }
   console.log('1.- EN solicitudPiezasPdf->', solicitudPiezasBD);
 
   let sp = solicitudPiezasBD;

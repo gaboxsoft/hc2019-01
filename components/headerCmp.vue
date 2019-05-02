@@ -32,7 +32,7 @@
                                right>
             <b-dropdown-item disabled href="#">Hoja de Urgencias</b-dropdown-item>
             <b-dropdown-item href="/ordenesMedico">Órdenes Médico </b-dropdown-item>
-            <b-dropdown-item href="#">Estudios</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Estudios</b-dropdown-item>
             <b-dropdown-item href="/notaUrgencias">Notas de Urgencia</b-dropdown-item>
             <b-dropdown-item href="/Evolucion">Hoja de Evolución Paciente</b-dropdown-item>
             <b-dropdown-item href="/MedicoTratante">Médicos Tratantes</b-dropdown-item>
@@ -42,14 +42,14 @@
                                right>
             <b-dropdown-item href="/ordenesMedico">Órdenes Médico</b-dropdown-item>
             <b-dropdown-item href="/Evolucion">Hoja de Evolución Paciente</b-dropdown-item>
-            <b-dropdown-item href="#">Historia Clínica Recién Nacido</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Historia Clínica Recién Nacido</b-dropdown-item>
             <b-dropdown-item disabled href="#">Registro Clínico Meonatolgía</b-dropdown-item>
             <b-dropdown-item href="/responsivaRN">Responsiva Mamá - Recién nacido</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="PROC.QUIRÚGICO"
                                right>
             <b-dropdown-item href="/MedicoTratante">Médicos Tratantes</b-dropdown-item>
-            <b-dropdown-item href="#">Programación Quirúrgica</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Programación Quirúrgica</b-dropdown-item>
             <b-dropdown-item href="/ConsentimientoInformado">Consentimiento Anestésia</b-dropdown-item>
             <b-dropdown-item href="/AltoRiesgo">Consentimiento Alto Riesgo</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -59,7 +59,7 @@
             <b-dropdown-item href="SolicitudPiezas">Estudio Piezas Anatomopatológicas</b-dropdown-item>
             <b-dropdown-item href="/ordenesMedico">Órdenes Médico</b-dropdown-item>
             <b-dropdown-item href="/Evolucion">Hoja Evolución Paciente</b-dropdown-item>
-            <b-dropdown-item href="#">Hoja Quirúgica</b-dropdown-item>
+            <b-dropdown-item disabled href="#">Hoja Quirúgica</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="EGRESO"
                                right>
