@@ -112,6 +112,8 @@ let solicitudPiezasSchema = new Schema({
   /////////////////////////
 });
 
-
+//try {
 module.exports = mongoose.model('SolicitudPiezas', solicitudPiezasSchema);
-
+//} catch (e) {
+//  // DO Nothing
+//}

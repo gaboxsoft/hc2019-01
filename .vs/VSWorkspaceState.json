@@ -1,6 +1,7 @@
 {
   "ExpandedNodes": [
     "",
+    "\\components",
     "\\config",
     "\\library",
     "\\library\\msiReportes",
@@ -8,8 +9,8 @@
     "\\msiformatos",
     "\\pages",
     "\\public",
-    "\\routes",
-    "\\store"
+    "\\routes"
   ],
+  "SelectedNode": "\\sube.bat",
   "PreviewInSolutionExplorer": false
 }

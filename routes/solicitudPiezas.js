@@ -25,12 +25,14 @@ app.get('/SolicitudPiezas/:id', function (req, res) {
     if (!solicitudPiezasBD) {
       return res.status(401).json({ ok: false, mensaje: 'No existe este solicitud de estudio' });
     }
-                                    
-    
+
+
 
     return res.json({ ok: true, solicitudPiezas: solicitudPiezasBD });
-  //}).populate('paciente').populate('medicoAnestesiologo');
-  }).populate('paciente');
+    //}).populate('paciente').populate('medicoAnestesiologo');
+  })
+    .populate('paciente');
+    
 });
 
 app.post('/SolicitudPiezas/:id', [verificaToken, rolAD], function (req, res) {

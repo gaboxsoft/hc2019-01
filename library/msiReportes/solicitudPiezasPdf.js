@@ -3,6 +3,7 @@ const pdf = require('pdfkit');
 const pdfTools = require('../pdfkit/gxPdf');
 const path = require('path');
 const fs = require('fs');
+
 const moment = require('moment');
 require('moment/locale/es');  // without this line it didn't work
 moment.locale('es');
@@ -211,10 +212,10 @@ const solicitudPiezasPdf = (solicitudPiezasBD) => {
     }
      */ 
   }
-  //console.log('1.- EN solicitudPiezasPdf->', solicitudPiezasBD);
+  console.log('1.- EN solicitudPiezasPdf->', solicitudPiezasBD);
 
   let sp = solicitudPiezasBD;
-  //console.log('EN solicitudPiezasPdf->', av);
+  //console.log('EN solicitudPiezasPdf->', sp);
   let paciente = sp.paciente;
 
   const hojaCartaPort = [612, 792];
@@ -268,13 +269,16 @@ const solicitudPiezasPdf = (solicitudPiezasBD) => {
 
 
   pages[0].forEach(function (field) {
-    console.log('field-->', field, 'type->', field.type);
-    
-    let paciente = av.paciente;
+    let paciente = sp.paciente;
+    let medicos = paciente.medicos;
+    let medicoTratante = medicos[0];
     let domicilio = (paciente.calle || '') + ' ' +
-      (paciente.numExterior || '') + ' ' + (paciente.numInterior || '') + (paciente.calle?', ' : '') +
+      (paciente.numExterior || '') + ' ' + (paciente.numInterior || '') + (paciente.calle ? ', ' : '') +
       (paciente.colonia ? paciente.colonia + ',' : '') + (paciente.municipio ? paciente.municipio + ' ' : '') +
       (paciente.entidad ? paciente.entidad + ' ' : '') + (paciente.CP ? ' CP' + paciente.CP : '');
+
+    console.log('field-->', field, 'type->', field.type, eval(field.name));
+    
 
     writeLine(doc, eval(field.name), field.row, field.col, field.align, field.indent, field.fontSize, field.color, field.width, field.type);
   });
@@ -317,6 +321,7 @@ const solicitudPiezasPdf = (solicitudPiezasBD) => {
   return filePath;
   //var buffer = encoding.convert(data, "Latin_1") 
 }
+
 
 
 
