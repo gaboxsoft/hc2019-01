@@ -11,68 +11,68 @@
       <tbody>
         
         <tr>
-          <td class="text-right" style="width:15%;">Folio:</td>
-          <td><input type="text" class="input-text" v-model="sp.folio" name="folio" size="10"></td>
-
+          <td class="text-right" style="width:15%;">Tipo cirugía:</td>
+          <td>
+            <div>
+              <input type="radio" id="urgente" value="M" v-model="pq.esUrgente">URGENTE
+              <input type="radio" id="Programa" value="P" v-model="pq.esUrgente">PROGRAMADA
+            </div>
+          </td>
+          <td>
+          Fecha:
+          </td>
+<input type="datetime-local" v-model="pq.fechaProgramada" name="fechaProgramada"></td>
+         
         </tr>
-
-        <tr>
-          <td class="text-right">Sala:</td>
-          <td><input type="text" class="input-text" v-model="sp.sala" name="sala" size="10"></td>
-
-        </tr>
-        <tr>
-          <td class="text-right">Fecha:</td>
-          <td><input type="datetime-local" v-model="sp.fechaSolicitud" name="fechaSolicitud" size="50"></td>
-        </tr>
+       
         <tr>
           <td class="text-right" style="vertical-align: middle;">Disposición final de la pieza:</td>
           <td>
-            Estudio patológico:<br /><input type="text" class="input-text" v-model="sp.estudio" name="estudio" size="40">
+            Estudio patológico:<br /><input type="text" class="input-text" v-model="pq.estudio" name="estudio" size="40">
             <br />
-            R.P.B.I.:<br /><input type="text" class="input-text" v-model="sp.RPBI" name="RPBI" size="40">
+            R.P.B.I.:<br /><input type="text" class="input-text" v-model="pq.RPBI" name="RPBI" size="40">
             <br />
             De acuerdo a la legalidad:<br />
             <div>
-              <input type="radio" id="medicoTratante" value="M" v-model="sp.quien">Médico tratante
-              <input type="radio" id="paciente" value="P" v-model="sp.quien">Paciente
-              <input type="radio" id="familiar" value="F" v-model="sp.quien">Familiar
+              <input type="radio" id="medicoTratante" value="M" v-model="pq.quien">Médico tratante
+              <input type="radio" id="paciente" value="P" v-model="pq.quien">Paciente
+              <input type="radio" id="familiar" value="F" v-model="pq.quien">Familiar
             </div>
           </td>
         </tr>
 
         <tr>
           <td class="text-right">Diagnóstico y/o datos clínicos:</td>
-          <td><input type="text" v-model="sp.diagnostico" name="diagnostico" size="50"></td>
+          <td><input type="text" v-model="pq.diagnostico" name="diagnostico" size="50"></td>
         </tr>
         <tr>
           <td class="text-right">Pieza anatómica:</td>
-          <td><input type="text" v-model="sp.piezaAnatomica" name="piezaAnatomica" size="50"></td>
+          <td><input type="text" v-model="pq.piezaAnatomica" name="piezaAnatomica" size="50"></td>
         </tr>
 
         <tr>
           <td class="text-right">Tipo intervención:</td>
-          <td><input type="text" v-model="sp.tipoIntervencion" name="tipoIntervencion" size="50"></td>
+          <td><input type="text" v-model="pq.tipoIntervencion" name="tipoIntervencion" size="50"></td>
         </tr>
         
         <tr>
           <td class="text-right" style="vertical-align: middle;">Sitio obtención:</td>
           <td class="text-left" >
-            <trazosFiguraHumanaCmp v-bind:imgBase64Original="sp.sitioObtencion" @trazosHechos="sp.sitioObtencion=$event" />
+            <trazosFiguraHumanaCmp v-bind:imgBase64Original="pq.sitioObtencion" @trazosHechos="pq.sitioObtencion=$event" />
           </td>
         </tr>
         
         <tr>
           <td class="text-right">Observaciones:</td>
-          <td><input type="text" v-model="sp.observaciones" name="observaciones" size="50"></td>
+          <td><input type="text" v-model="pq.observaciones" name="observaciones" size="50"></td>
         </tr>
         <tr>
           <td class="text-right">Nombre enfermera recibe:</td>
-          <td><input type="text" v-model="sp.nombreEnfermera" name="nombreEnfermera" size="50"></td>
+          <td><input type="text" v-model="pq.nombreEnfermera" name="nombreEnfermera" size="50"></td>
         </tr>
         <tr>
           <td class="text-right">Nombre entrega/recibe:</td>
-          <td><input type="text" v-model="sp.nombreER" name="nombreER" size="50"></td>
+          <td><input type="text" v-model="pq.nombreER" name="nombreER" size="50"></td>
         </tr>
 
       </tbody>
@@ -87,7 +87,7 @@
             </td>
             <td id="firmaMedico">
               <firmaCmp id="firmaX" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
-              <p><img v-bind:src="firma(sp.firmaBase64MedicoTratante)" width="300" height="60" /></p>
+              <p><img v-bind:src="firma(pq.firmaBase64MedicoTratante)" width="300" height="60" /></p>
             </td>
           </tr>
 
@@ -96,7 +96,7 @@
               <b-btn class="bg-success" v-on:click="firmaEnfermera">FIRMA ENFERMERA</b-btn>
             </td>
             <td id="firmaEnfermera">
-              <p><img v-bind:src="firma(sp.firmaBase64Enfermera)" width="300" height="60" /></p>
+              <p><img v-bind:src="firma(pq.firmaBase64Enfermera)" width="300" height="60" /></p>
             </td>
           </tr>
           <tr>
@@ -104,7 +104,7 @@
               <b-btn class="bg-success" v-on:click="firmaER">FIRMA ENTREGA/RECIBE</b-btn>
             </td>
             <td id="firmaER">
-              <p><img v-bind:src="firma(sp.firmaBase64ER)" width="300" height="60" /></p>
+              <p><img v-bind:src="firma(pq.firmaBase64ER)" width="300" height="60" /></p>
             </td>
           </tr>
 
@@ -113,9 +113,9 @@
     </div>
 
     <!--<div>
-      <textarea class="input-text textarea-size" type="text" v-model="sp.firmaBase64MedicoTratante" name="x1"></textarea>
-      <textarea class="input-text textarea-size" type="text" v-model="sp.firmaBase64Enfermera" name="x2"></textarea>
-      <textarea class="input-text textarea-size" type="text" v-model="sp.firmaBase64ER" name="x3"></textarea>
+      <textarea class="input-text textarea-size" type="text" v-model="pq.firmaBase64MedicoTratante" name="x1"></textarea>
+      <textarea class="input-text textarea-size" type="text" v-model="pq.firmaBase64Enfermera" name="x2"></textarea>
+      <textarea class="input-text textarea-size" type="text" v-model="pq.firmaBase64ER" name="x3"></textarea>
 
     </div>-->
 
@@ -149,7 +149,7 @@
 
         token: '',
         paciente: {},
-        sp: {},
+        pq: {},
         firmaBase64: '',
         firmaBase64Back: '',
         estaFirmando: false
@@ -172,13 +172,13 @@
           //console.log(this.quienFirma, ':[', this.firmaBase64Back, ']');
           switch (this.quienFirma) {
             case 'MEDICO':
-              this.sp.firmaBase64MedicoTratante = this.firmaBase64Back;
+              this.pq.firmaBase64MedicoTratante = this.firmaBase64Back;
               break;
             case 'ENFERMERA':
-              this.sp.firmaBase64Enfermera = this.firmaBase64Back;
+              this.pq.firmaBase64Enfermera = this.firmaBase64Back;
               break;
             case 'ER':
-              this.sp.firmaBase64ER = this.firmaBase64Back;
+              this.pq.firmaBase64ER = this.firmaBase64Back;
               break;
             default:
             // code block
@@ -194,7 +194,7 @@
 
     created() {
       //this.getCurrentPaciente();
-      this.getSolicitudPiezas();
+      //this.getSolicitudPiezas();
 
     },
 
@@ -243,7 +243,7 @@
       
         
         const req = {
-          method: this.sp.paciente ? 'put' : 'post',
+          method: this.pq.paciente ? 'put' : 'post',
           url: process.env.urlServer + '/SolicitudPiezas/' + this.$store.state.pacienteId,
           headers: {
             token: this.$store.state.token
@@ -252,35 +252,35 @@
 
             //////////////////
 
-            folio: this.sp.folio,
-            sala: this.sp.sala,
-            fechaSolicitud: this.sp.fechaSolicitud,
+            folio: this.pq.folio,
+            sala: this.pq.sala,
+            fechaSolicitud: this.pq.fechaSolicitud,
 
-            estudio: this.sp.estudio,
-            RPBI: this.sp.RPBI,
-            quien: this.sp.quien,
+            estudio: this.pq.estudio,
+            RPBI: this.pq.RPBI,
+            quien: this.pq.quien,
 
-            diagnostico: this.sp.diagnostico,
-            piezaAnatomica: this.sp.piezaAnatomica,
-            tipoIntervencion: this.sp.tipoIntervencion,
-            sitioObtencion: this.sp.sitioObtencion,
-            observaciones: this.sp.observaciones,
+            diagnostico: this.pq.diagnostico,
+            piezaAnatomica: this.pq.piezaAnatomica,
+            tipoIntervencion: this.pq.tipoIntervencion,
+            sitioObtencion: this.pq.sitioObtencion,
+            observaciones: this.pq.observaciones,
 
-            firmaBase64MedicoTratante: this.sp.firmaBase64MedicoTratante,
+            firmaBase64MedicoTratante: this.pq.firmaBase64MedicoTratante,
 
-            nombreEnfermera: this.sp.nombreEnfermera,
-            firmaBase64Enfermera: this.sp.firmaBase64Enfermera,
+            nombreEnfermera: this.pq.nombreEnfermera,
+            firmaBase64Enfermera: this.pq.firmaBase64Enfermera,
 
-            nombreER: this.sp.nombreER,
-            firmaBase64ER: this.sp.firmaBase64ER,
+            nombreER: this.pq.nombreER,
+            firmaBase64ER: this.pq.firmaBase64ER,
 
             //////////////////
           }
         };
         axios(req)
           .then((response) => {
-            this.sp = response.data.solicitudPiezas;
-            this.sp.fechaSolicitud = moment(this.sp.fechaSolicitud).format('YYYY-MM-DDTHH:mm');
+            this.pq = response.data.solicitudPiezas;
+            this.pq.fechaSolicitud = moment(this.pq.fechaSolicitud).format('YYYY-MM-DDTHH:mm');
 
             this.$refs.notify.showNotify("DOCUMENTO GUARDADO", 2.5);
             this.$store.commit('setSocketDatosGenerales');
@@ -402,7 +402,7 @@
       },
 
       imprimir: function () {
-        if (!this.sp.paciente) {
+        if (!this.pq.paciente) {
           this.$refs.notify.showNotify("ANTES DEBES AGREGAR Y GUARDAR LOS DATOS", 4);
           return;
         }
@@ -432,22 +432,22 @@
           }
         }).then((response) => {
           console.log('regresé exitósamente de leer la solci pzas....');
-          this.sp = response.data.solicitudPiezas;
-          this.sp.fechaSolicitud = moment(this.sp.fechaSolicitud).format('YYYY-MM-DDTHH:mm');
-          console.log('OK leí getSolicitudPzas-//->:', this.sp.folio);
+          this.pq = response.data.solicitudPiezas;
+          this.pq.fechaSolicitud = moment(this.pq.fechaSolicitud).format('YYYY-MM-DDTHH:mm');
+          console.log('OK leí getSolicitudPzas-//->:', this.pq.folio);
         })
           .catch(err => {
             //console.log('>>>en getSolicitudPiezas-> error', err);
 
-            //this.sp = { fechaFirma: Date() };
+            //this.pq = { fechaFirma: Date() };
 
             //this.$refs.notify.showNotify("ERROR AL LEER DOCUMENTO"+JSON.stringify(err.Error), 2.5);
 
             
-            ////this.sp.sitioObtencion = figHumanaBase64;
-            ////this.trazos = this.sp.sitioObtencion;
-            this.sp = {};
-            //console.log('hubo err al leer getSolicitudPzas-//->:', this.sp);
+            ////this.pq.sitioObtencion = figHumanaBase64;
+            ////this.trazos = this.pq.sitioObtencion;
+            this.pq = {};
+            //console.log('hubo err al leer getSolicitudPzas-//->:', this.pq);
           });
       }
 

@@ -2,15 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\components",
-    "\\config",
-    "\\library",
-    "\\library\\msiReportes",
-    "\\models",
     "\\msiformatos",
-    "\\pages",
-    "\\public",
-    "\\public\\pdfs"
+    "\\pages"
   ],
-  "SelectedNode": "\\sube.bat",
+  "SelectedNode": "\\components\\progQuirurgicACMP.vue",
   "PreviewInSolutionExplorer": false
 }
