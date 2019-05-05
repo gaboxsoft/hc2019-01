@@ -92,6 +92,9 @@
       getToken() {
         return this.$store.state.token;
       },
+      urlGetPacientes() {
+        return process.env.urlServer + '/Pacientes/'
+      },
       urlApiPaciente() {
         return process.env.urlServer + '/Paciente/' + this.$store.state.pacienteId;
       },
@@ -193,7 +196,7 @@
 
       getPacientes: function () {
         this.token = this.$store.state.token;
-        axios.get(urlGetPacientes, {
+        axios.get(this.urlGetPacientes, {
           headers: {
             'token': this.token,
             'usuarioId': this.$store.state.usuarioId

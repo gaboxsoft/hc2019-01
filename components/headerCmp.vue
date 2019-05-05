@@ -49,7 +49,7 @@
           <b-nav-item-dropdown text="PROC.QUIRÚGICO"
                                right>
             <b-dropdown-item href="/MedicoTratante">Médicos Tratantes</b-dropdown-item>
-            <b-dropdown-item disabled href="#">Programación Quirúrgica</b-dropdown-item>
+            <b-dropdown-item href="/ProgQuirurgica">Programación Quirúrgica</b-dropdown-item>
             <b-dropdown-item href="/ConsentimientoInformado">Consentimiento Anestésia</b-dropdown-item>
             <b-dropdown-item href="/AltoRiesgo">Consentimiento Alto Riesgo</b-dropdown-item>
           </b-nav-item-dropdown>
