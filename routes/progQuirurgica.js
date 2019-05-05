@@ -81,6 +81,8 @@ app.post('/ProgQuirurgica/:id', [verificaToken, rolAD], function (req, res) {
       medicoAyudante1: body.medicoAyudante1,
       medicoAyudante2: body.medicoAyudante2,
       medicoAnesteciologo: body.medicoAnesteciologo,
+      firmaBase64Paciente: body.firmaBase64Paciente,
+      firmaBase64Responsable: body.firmaBase64Responsable,
 
       /////////////////////////
       //Sello

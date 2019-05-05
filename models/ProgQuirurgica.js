@@ -112,6 +112,13 @@ let progQuirurgicaSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Usuario'
   },
+  firmaBase64Paciente: {
+    type: String,
+  },
+  firmaBase64Responsable: {
+    type: String,
+  },
+
 
   /////////////////////////
   // Sello
