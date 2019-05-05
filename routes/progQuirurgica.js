@@ -1,4 +1,4 @@
-const SolicitudPiezas = require('../models/solicitudPiezas');
+const progQuirurgica = require('../models/progQuirurgica');
 
 const Paciente = require('../models/paciente');
 
@@ -12,37 +12,35 @@ let { verificaToken, verificaAdminRol, rolADE, rolAD } = require('../middleware/
 
 
 //app.get('/paciente/:id', verificaToken, function (req, res) {
-app.get('/SolicitudPiezas/:id', function (req, res) {
+app.get('/ProgQuirurgica/:id', function (req, res) {
   const id = req.params.id; // Id del paciente
   let token = req.get('token');
 
-  SolicitudPiezas.findOne({ paciente: id }, (err, solicitudPiezasBD) => {
+  ProgQuirurgica.findOne({ paciente: id }, (err, progQuirurgicaBD) => {
     if (err) {
       return res.status(400).
         json({ ok: false, error: err, mensaje: 'hubo en error' });
     };
 
-    if (!solicitudPiezasBD) {
-      return res.status(401).json({ ok: false, mensaje: 'No existe este solicitud de estudio' });
+    if (!progQuirurgicaBD) {
+      return res.status(401).json({ ok: false, mensaje: 'No existe este prog. Quirurgica' });
     }
 
+    return res.json({ ok: true, progQuirurgica: progQuirurgicaBD });
 
-
-    return res.json({ ok: true, solicitudPiezas: solicitudPiezasBD });
-    //}).populate('paciente').populate('medicoAnestesiologo');
   })
     .populate('paciente');
-    
+
 });
 
-app.post('/SolicitudPiezas/:id', [verificaToken, rolAD], function (req, res) {
+app.post('/ProgQuirurgica/:id', [verificaToken, rolAD], function (req, res) {
 
 
   const id = req.params.id; // Id del paciente
 
   let body = req.body;
 
-  console.log('2.- POST body= ', body);
+  //console.log('2.- POST body= ', body);
 
   // Busca paciente
   Paciente.findById(id, (err, pacienteBD) => {
@@ -53,34 +51,36 @@ app.post('/SolicitudPiezas/:id', [verificaToken, rolAD], function (req, res) {
     if (!pacienteBD) {
       return res.status(401).json({ ok: false, error: 'NO ENCONTRÉ AL PACIENTE' });
     };
-    
-    let solicitudPiezas = new SolicitudPiezas({
+
+    let progQuirurgica = new ProgQuirurgica({
 
       paciente: id,
 
-      folio: body.folio,
-      sala: body.sala,
-      fechaSolicitud: body.fechaSolicitud,
+      esUrgente: body.esUrgente,
+      fechaProgramada: body.fechaProgramada,
+      nombreResponsableProgramacion: body.nombreResponsableProgramacion,
 
-      estudio: body.estudio,
-      RPBI: body.RPBI,
-      quien: body.quien,
+      tiempoQuirurgico: body.tiempoQuirurgico,
+      materialYEquipo: body.materialYEquipo,
+      operacionProyectada: body.operacionProyectada,
 
-      diagnostico: body.diagnostico,
-      piezaAnatomica: body.piezaAnatomica,
-      tipoIntervencion: body.tipoIntervencion,
-      sitioObtencion: body.sitioObtencion,
-      observaciones: body.observaciones,
+      estudiosTransoperatorios: body.estudiosTransoperatorios,
+      diagnosticoPreoperatorio: body.diagnosticoPreoperatorio,
+      estudiosPostoperatorio: body.estudiosPostoperatorio,
+      operacionRealizada: body.operacionRealizada,
+      tipoAnestecia: body.tipoAnestecia,
 
-      firmaBase64MedicoTratante: body.firmaBase64MedicoTratante,
+      incidentesYHallazgos: body.incidentesYHallazgos,
 
-      nombreEnfermera: body.nombreEnfermera,
-      firmaBase64Enfermera: body.firmaBase64Enfermera,
+      descripcionTecnica: body.descripcionTecnica,
+      complicaciones: body.complicaciones,
 
-      nombreER: body.nombreER,
-      firmaBase64ER: body.firmaBase64ER,
-
-      
+      piezaQuirurgica: body.piezaQuirurgica,
+      medicoCirujano: body.medicoCirujano,
+      firmaBase64medicoCirujano: body.firmaBase64medicoCirujano,
+      medicoAyudante1: body.medicoAyudante1,
+      medicoAyudante2: body.medicoAyudante2,
+      medicoAnesteciologo: body.medicoAnesteciologo,
 
       /////////////////////////
       //Sello
@@ -91,17 +91,17 @@ app.post('/SolicitudPiezas/:id', [verificaToken, rolAD], function (req, res) {
       usuarioSe: req.usuario._id
     });
 
-    solicitudPiezas.save((err, solicitudPiezasBD) => {
+    progQuirurgica.save((err, progQuirurgicaBD) => {
       if (err) {
-        return res.status(400).json({ ok: false, error: err, body: solicitudPiezas });
+        return res.status(400).json({ ok: false, error: err, body: progQuirurgica });
       };
-      return res.status(200).json({ ok: true, solicitudPiezas: solicitudPiezasBD });
+      return res.status(200).json({ ok: true, progQuirurgica: progQuirurgicaBD });
     });
   });
 
 });
 
-app.put('/SolicitudPiezas/:id', [verificaToken, rolADE], function (req, res) {
+app.put('/ProgQuirurgica/:id', [verificaToken, rolADE], function (req, res) {
   const id = req.params.id; // Id del paciente
 
   let body = req.body;
@@ -121,18 +121,18 @@ app.put('/SolicitudPiezas/:id', [verificaToken, rolADE], function (req, res) {
       return res.status(401).json({ ok: false, error: 'NO ENCONTRÉ AL PACIENTE' });
     };
 
-    
 
-    SolicitudPiezas.findOneAndUpdate({ paciente: id, 'situacionSe': { $eq: 1 } }, body, { new: true, runValidators: true, context: 'query' }, (err, solicitudPiezasBD) => {
+
+    ProgQuirurgica.findOneAndUpdate({ paciente: id, 'situacionSe': { $eq: 1 } }, body, { new: true, runValidators: true, context: 'query' }, (err, progQuirurgicaBD) => {
       if (err) {
         return res.status(400).
           json({ ok: false, error: { mensaje: err } });
       }
-      if (!solicitudPiezasBD) {
+      if (!progQuirurgicaBD) {
         return res.status(401).
           json({ ok: false, error: { mensaje: 'No existe  alta voluntaria.' } });
       }
-      return res.json({ ok: true, solicitudPiezas: solicitudPiezasBD });
+      return res.json({ ok: true, progQuirurgica: progQuirurgicaBD });
     }).populate('paciente');
   });
 
