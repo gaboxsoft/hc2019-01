@@ -1,4 +1,4 @@
-const progQuirurgica = require('../models/progQuirurgica');
+const ProgQuirurgica = require('../models/progQuirurgica');
 
 const Paciente = require('../models/paciente');
 
@@ -60,15 +60,19 @@ app.post('/ProgQuirurgica/:id', [verificaToken, rolAD], function (req, res) {
       fechaProgramada: body.fechaProgramada,
       nombreResponsableProgramacion: body.nombreResponsableProgramacion,
 
+      hb: body.hb,
+      ht: body.ht,
+      gpoRH: body.gpoRH,
+           
       tiempoQuirurgico: body.tiempoQuirurgico,
       materialYEquipo: body.materialYEquipo,
       operacionProyectada: body.operacionProyectada,
 
       estudiosTransoperatorios: body.estudiosTransoperatorios,
       diagnosticoPreoperatorio: body.diagnosticoPreoperatorio,
-      estudiosPostoperatorio: body.estudiosPostoperatorio,
+      diagnosticoPostoperatorio: body.diagnosticoPostoperatorio,
       operacionRealizada: body.operacionRealizada,
-      tipoAnestecia: body.tipoAnestecia,
+      tipoAnestesia: body.tipoAnestesia,
 
       incidentesYHallazgos: body.incidentesYHallazgos,
 
@@ -76,13 +80,12 @@ app.post('/ProgQuirurgica/:id', [verificaToken, rolAD], function (req, res) {
       complicaciones: body.complicaciones,
 
       piezaQuirurgica: body.piezaQuirurgica,
+
       medicoCirujano: body.medicoCirujano,
       firmaBase64medicoCirujano: body.firmaBase64medicoCirujano,
       medicoAyudante1: body.medicoAyudante1,
       medicoAyudante2: body.medicoAyudante2,
-      medicoAnesteciologo: body.medicoAnesteciologo,
-      firmaBase64Paciente: body.firmaBase64Paciente,
-      firmaBase64Responsable: body.firmaBase64Responsable,
+      medicoAnestesiologo: body.medicoAnestesiologo,
 
       /////////////////////////
       //Sello

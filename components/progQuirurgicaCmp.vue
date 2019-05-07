@@ -9,70 +9,145 @@
 
     <table class="table table-sm table-info">
       <tbody>
-        
         <tr>
-          <td class="text-right" style="width:15%;">Tipo cirugía:</td>
-          <td>
-            <div>
-              <input type="radio" id="urgente" value="M" v-model="pq.esUrgente">URGENTE
-              <input type="radio" id="Programa" value="P" v-model="pq.esUrgente">PROGRAMADA
-            </div>
-          </td>
-          <td>
-          Fecha:
-          </td>
-<input type="datetime-local" v-model="pq.fechaProgramada" name="fechaProgramada"></td>
-         
+          <td class="text-right">Nombre responsable de programación:</td>
+          <td><input type="text" class="input-text" v-model="pq.nombreResponsableProgramacion" name="nombreResponsableProgramacion" size="80"></td>
         </tr>
-       
         <tr>
-          <td class="text-right" style="vertical-align: middle;">Disposición final de la pieza:</td>
+          <td class="text-right" style="width:25%;">Tipo cirugía:</td>
           <td>
-            Estudio patológico:<br /><input type="text" class="input-text" v-model="pq.estudio" name="estudio" size="40">
-            <br />
-            R.P.B.I.:<br /><input type="text" class="input-text" v-model="pq.RPBI" name="RPBI" size="40">
-            <br />
-            De acuerdo a la legalidad:<br />
             <div>
-              <input type="radio" id="medicoTratante" value="M" v-model="pq.quien">Médico tratante
-              <input type="radio" id="paciente" value="P" v-model="pq.quien">Paciente
-              <input type="radio" id="familiar" value="F" v-model="pq.quien">Familiar
+              <input type="radio" id="urgente" value="M" v-model="pq.esUrgente">  URGENTE
+              <br />
+              <input type="radio" id="Programa" value="P" v-model="pq.esUrgente">  PROGRAMADA
             </div>
           </td>
         </tr>
 
         <tr>
-          <td class="text-right">Diagnóstico y/o datos clínicos:</td>
-          <td><input type="text" v-model="pq.diagnostico" name="diagnostico" size="50"></td>
+          <td class="text-right">Fecha y hora solicitada:</td>
+          <td><input type="datetime-local" v-model="pq.fechaProgramada" name="fechaProgramada"></td>
         </tr>
         <tr>
-          <td class="text-right">Pieza anatómica:</td>
-          <td><input type="text" v-model="pq.piezaAnatomica" name="piezaAnatomica" size="50"></td>
+          <td class="text-right">Médico cirujano:</td>
+          <td>
+            <select v-model="pq.medicoCirujano">
+              <option v-for="mm in paciente.medicos" v-bind:value="mm._id">
+                {{ mm.nombre }} - {{mm.especialidad}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">Primer ayudante:</td>
+          <td>
+            <select v-model="pq.medicoAyudante1">
+              <option v-for="mm in paciente.medicos" v-bind:value="mm._id">
+                {{ mm.nombre }} - {{mm.especialidad}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">Segundo ayudante:</td>
+          <td>
+            <select v-model="pq.medicoAyudante2">
+              <option v-for="mm in paciente.medicos" v-bind:value="mm._id">
+                {{ mm.nombre }} - {{mm.especialidad}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">Anestesiólogo:</td>
+          <td>
+            <select v-model="pq.medicoAnesteciologo">
+              <option v-for="mm in paciente.medicos" v-bind:value="mm._id">
+                {{ mm.nombre }} - {{mm.especialidad}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right">HB:</td>
+          <td><input type="text"  class="input-text"  v-model="pq.hb" name="hb" size="20"></td>
+        </tr>
+        <tr>
+          <td class="text-right">HT:</td>
+          <td><input type="text" class="input-text"  v-model="pq.ht" name="ht" size="20"></td>
+        </tr>
+        <tr>
+          <td class="text-right">Grupo y RH:</td>
+          <td><input type="text" class="input-text"  v-model="pq.gpoRH" name="gpoRH" size="20"></td>
+        </tr>
+        
+
+        <tr>
+          <td class="text-right">Tiempo quirúrgico estimado:</td>
+          <td><input type="text" class="input-text"  v-model="pq.tiempoQuirurgico" name="tiempoQuirurgico" size="20"></td>
         </tr>
 
         <tr>
-          <td class="text-right">Tipo intervención:</td>
-          <td><input type="text" v-model="pq.tipoIntervencion" name="tipoIntervencion" size="50"></td>
+          <td class="text-right">Material y equipo requerido:</td>
+          <td><input type="text" class="input-text"  v-model="pq.materialYEquipo" name="materialYEquipo" size="80"></td>
         </tr>
-        
+
         <tr>
-          <td class="text-right" style="vertical-align: middle;">Sitio obtención:</td>
-          <td class="text-left" >
-            <trazosFiguraHumanaCmp v-bind:imgBase64Original="pq.sitioObtencion" @trazosHechos="pq.sitioObtencion=$event" />
+          <td class="text-right">Operación proyectada:</td>
+          <td><input type="text" class="input-text"  v-model="pq.operacionProyectada" name="operacionProyectada" size="80"></td>
+        </tr>
+
+        <tr>
+          <td class="text-right">Estudios transoperatorios:</td>
+          <td><input type="text" class="input-text"  v-model="pq.estudiosTransoperatorios" name="estudiosTransoperatorios" size="80"></td>
+        </tr>
+
+        <tr>
+          <td class="text-right">Diagnóstico preoperatorio:</td>
+          <td><input type="text" class="input-text"  v-model="pq.diagnosticoPreoperatorio" name="diagnosticoPreoperatorio" size="80"></td>
+        </tr>
+
+        <tr>
+          <td class="text-right">Diagnóstico postoperatorio:</td>
+          <td><input type="text" class="input-text"  v-model="pq.diagnosticoPostoperatorio" name="diagnosticoPostoperatorio" size="80"></td>
+        </tr>
+
+        <tr>
+          <td class="text-right">Operación realizada:</td>
+          <td><input type="text" class="input-text"  v-model="pq.operacionRealizada" name="operacionRealizada" size="80"></td>
+        </tr>
+
+        <tr>
+          <td class="text-right">Tipo de anestesia:</td>
+          <td>
+            <div>
+              <input type="radio" id="local" value="L" v-model="pq.tipoAnestesia">LOCAL
+              <br />
+              <input type="radio" id="regional" value="R" v-model="pq.tipoAnestesia">REGIONAL
+              <br />
+              <input type="radio" id="general" value="G" v-model="pq.tipoAnestesia">GENERAL
+            </div>
           </td>
         </tr>
-        
+
         <tr>
-          <td class="text-right">Observaciones:</td>
-          <td><input type="text" v-model="pq.observaciones" name="observaciones" size="50"></td>
+          <td class="text-right">Incidentes y hallazgos:</td>
+          <td><textarea type="text" class="input-text"  v-model="pq.incidentesYHallazgos" name="incidentesYHallazgos" rows="8" cols="80"></textarea></td>
         </tr>
+
         <tr>
-          <td class="text-right">Nombre enfermera recibe:</td>
-          <td><input type="text" v-model="pq.nombreEnfermera" name="nombreEnfermera" size="50"></td>
+          <td class="text-right">Descripción de la técnica quirúrgica:</td>
+          <td><textarea type="text" class="input-text"  v-model="pq.descripcionTecnica" name="descripcionTecnica" rows="12" cols="80"></textarea></td>
         </tr>
+
         <tr>
-          <td class="text-right">Nombre entrega/recibe:</td>
-          <td><input type="text" v-model="pq.nombreER" name="nombreER" size="50"></td>
+          <td class="text-right">Complicaciones:</td>
+          <td><textarea type="text" class="input-text"  v-model="pq.complicaciones" name="complicaciones" rows="4" cols="80"></textarea></td>
+        </tr>
+
+        <tr>
+          <td class="text-right">Pieza quirúrgica:</td>
+          <td><input type="text" class="input-text"  v-model="pq.piezaQuirurgica" name="piezaQuirurgica" size="80"></td>
         </tr>
 
       </tbody>
@@ -83,42 +158,17 @@
         <tbody>
           <tr>
             <td>
-              <b-btn class="bg-success" v-on:click="firmaMedico">FIRMA MÉDICO</b-btn>
+              <b-btn class="bg-success" v-on:click="firmaMedico">FIRMA MÉDICO CIRUJANO</b-btn>
             </td>
             <td id="firmaMedico">
               <firmaCmp id="firmaX" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
-              <p><img v-bind:src="firma(pq.firmaBase64MedicoTratante)" width="300" height="60" /></p>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <b-btn class="bg-success" v-on:click="firmaEnfermera">FIRMA ENFERMERA</b-btn>
-            </td>
-            <td id="firmaEnfermera">
-              <p><img v-bind:src="firma(pq.firmaBase64Enfermera)" width="300" height="60" /></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <b-btn class="bg-success" v-on:click="firmaER">FIRMA ENTREGA/RECIBE</b-btn>
-            </td>
-            <td id="firmaER">
-              <p><img v-bind:src="firma(pq.firmaBase64ER)" width="300" height="60" /></p>
+              <p><img v-bind:src="firma(pq.firmaBase64MedicoCirujano)" width="300" height="60" /></p>
             </td>
           </tr>
 
         </tbody>
       </table>
     </div>
-
-    <!--<div>
-      <textarea class="input-text textarea-size" type="text" v-model="pq.firmaBase64MedicoTratante" name="x1"></textarea>
-      <textarea class="input-text textarea-size" type="text" v-model="pq.firmaBase64Enfermera" name="x2"></textarea>
-      <textarea class="input-text textarea-size" type="text" v-model="pq.firmaBase64ER" name="x3"></textarea>
-
-    </div>-->
-
 
   </div>
 </template>
@@ -128,22 +178,20 @@
 
   import notifyCmp from '~/components/notifyCmp';
   import firmaCmp from '~/components/firmaCmp';
-  import trazosFiguraHumanaCmp from '~/components/trazosFiguraHumanaCmp';
-  
+
 
   import moment from 'moment';
   //require('moment/locale/es');
 
   export default {
-    name: 'solicitudPiezasCmp',
+    name: 'progQuirurgicaCmp',
     components: {
       notifyCmp,
       firmaCmp,
-      trazosFiguraHumanaCmp
     },
     data() {
       return {
-        tituloPagina: '-- SOLICITUD ESTUDIO Y DISPOSICIÓN DE PIEZAS ANOTOMOPATOLÓGICAS--',
+        tituloPagina: '-- PROGRAMACIÓN QUIRÚRGICA--',
         tituloFirma: '',
         quienFirma: '',
 
@@ -157,7 +205,7 @@
     },
     computed: {
 
-      seFirmo: function () {        
+      seFirmo: function () {
         return !(this.firmaBase64 === '');
       }
     },
@@ -166,20 +214,15 @@
       seFirmo: function () {
 
         if (this.seFirmo) {
-          // Para clonar la firma en otro objeto y que nosean la misma referencia
+          // Para clonar la firma en otro objeto y que no sean la misma referencia
           this.firmaBase64Back = JSON.parse(JSON.stringify(this.firmaBase64));
 
           //console.log(this.quienFirma, ':[', this.firmaBase64Back, ']');
           switch (this.quienFirma) {
             case 'MEDICO':
-              this.pq.firmaBase64MedicoTratante = this.firmaBase64Back;
+              this.pq.firmaBase64MedicoCirujano = this.firmaBase64Back;
               break;
-            case 'ENFERMERA':
-              this.pq.firmaBase64Enfermera = this.firmaBase64Back;
-              break;
-            case 'ER':
-              this.pq.firmaBase64ER = this.firmaBase64Back;
-              break;
+            
             default:
             // code block
           }
@@ -193,8 +236,8 @@
     },
 
     created() {
-      //this.getCurrentPaciente();
-      //this.getSolicitudPiezas();
+      this.getCurrentPaciente();
+      this.getProgQuirurgica();
 
     },
 
@@ -206,18 +249,19 @@
         return "no-image.jpg"
       },
 
-   
       addHeaderBase64: function (imgBase64) {
         if (imgBase64) {
           return "data: image/png;base64," + imgBase64
         };
         return '';
       },
+
       firmaEnfermera: function () {
         this.quienFirma = 'ENFERMERA';
         document.getElementById('firmaEnfermera').appendChild(document.getElementById('firmaX'));
         this.firmar();
       },
+
       firmaMedico: function () {
         this.quienFirma = 'MEDICO';
         document.getElementById('firmaMedico').appendChild(document.getElementById('firmaX'));
@@ -236,51 +280,56 @@
         document.getElementById('btnIniciarFirma').click();
       },
 
-
-
       guardar: function () {
 
-      
-        
         const req = {
           method: this.pq.paciente ? 'put' : 'post',
-          url: process.env.urlServer + '/SolicitudPiezas/' + this.$store.state.pacienteId,
+          url: process.env.urlServer + '/ProgQuirurgica/' + this.$store.state.pacienteId,
           headers: {
             token: this.$store.state.token
           },
           data: {
+            //////////////////////
+            
 
-            //////////////////
+            esUrgente: this.pq.esUrgente,
+            fechaProgramada: this.pq.fechaProgramada,
+            nombreResponsableProgramacion: this.pq.nombreResponsableProgramacion,
 
-            folio: this.pq.folio,
-            sala: this.pq.sala,
-            fechaSolicitud: this.pq.fechaSolicitud,
+            hb: this.pq.hb,
+            ht: this.pq.ht,
+            gpoRH: this.pq.gpoRH,
 
-            estudio: this.pq.estudio,
-            RPBI: this.pq.RPBI,
-            quien: this.pq.quien,
+            tiempoQuirurgico: this.pq.tiempoQuirurgico,
+            materialYEquipo: this.pq.materialYEquipo,
+            operacionProyectada: this.pq.operacionProyectada,
 
-            diagnostico: this.pq.diagnostico,
-            piezaAnatomica: this.pq.piezaAnatomica,
-            tipoIntervencion: this.pq.tipoIntervencion,
-            sitioObtencion: this.pq.sitioObtencion,
-            observaciones: this.pq.observaciones,
+            estudiosTransoperatorios: this.pq.estudiosTransoperatorios,
+            diagnosticoPreoperatorio: this.pq.diagnosticoPreoperatorio,
+            diagnosticoPostoperatorio: this.pq.diagnosticoPostoperatorio,
+            operacionRealizada: this.pq.operacionRealizada,
+            tipoAnestesia: this.pq.tipoAnestesia,
 
-            firmaBase64MedicoTratante: this.pq.firmaBase64MedicoTratante,
+            incidentesYHallazgos: this.pq.incidentesYHallazgos,
 
-            nombreEnfermera: this.pq.nombreEnfermera,
-            firmaBase64Enfermera: this.pq.firmaBase64Enfermera,
+            descripcionTecnica: this.pq.descripcionTecnica,
+            complicaciones: this.pq.complicaciones,
 
-            nombreER: this.pq.nombreER,
-            firmaBase64ER: this.pq.firmaBase64ER,
+            piezaQuirurgica: this.pq.piezaQuirurgica,
 
+            medicoCirujano: this.pq.medicoCirujano,
+            firmaBase64medicoCirujano: this.pq.firmaBase64medicoCirujano,
+            medicoAyudante1: this.pq.medicoAyudante1,
+            medicoAyudante2: this.pq.medicoAyudante2,
+            medicoAnestesiologo: this.pq.medicoAnestesiologo,
+           
             //////////////////
           }
         };
         axios(req)
           .then((response) => {
-            this.pq = response.data.solicitudPiezas;
-            this.pq.fechaSolicitud = moment(this.pq.fechaSolicitud).format('YYYY-MM-DDTHH:mm');
+            this.pq = response.data.progQuirurgica;
+            this.pq.fechaProgramada = moment(this.pq.fechaProgramada).format('YYYY-MM-DDTHH:mm');
 
             this.$refs.notify.showNotify("DOCUMENTO GUARDADO", 2.5);
             this.$store.commit('setSocketDatosGenerales');
@@ -294,7 +343,7 @@
       },
 
       getCurrentPaciente: function () {
-        
+
         axios.get(process.env.urlServer + '/Paciente/' + this.$store.state.pacienteId, {
           token: this.$store.state.token
         })
@@ -423,27 +472,27 @@
             });
       },
 
-      getSolicitudPiezas: function () {
-        console.log('engetSolicitudPiezas->->-> ');
+      getProgQuirurgica: function () {
+        console.log('en getProgQuirurgica->->-> ');
 
-        axios.get(process.env.urlServer + '/SolicitudPiezas/' + this.$store.state.pacienteId, {
+        axios.get(process.env.urlServer + '/ProgQuirurgica/' + this.$store.state.pacienteId, {
           headers: {
             'token': this.$store.state.token
           }
         }).then((response) => {
-          console.log('regresé exitósamente de leer la solci pzas....');
-          this.pq = response.data.solicitudPiezas;
-          this.pq.fechaSolicitud = moment(this.pq.fechaSolicitud).format('YYYY-MM-DDTHH:mm');
-          console.log('OK leí getSolicitudPzas-//->:', this.pq.folio);
+          console.log('regresé exitósamente de leer la prog quirurgica....');
+          this.pq = response.data.progQuirurgica;
+          this.pq.fechaProgramada = moment(this.pq.fechaProgramada).format('YYYY-MM-DDTHH:mm');
+          console.log('OK leí getProgQuirurgica-//->:');
         })
           .catch(err => {
-            //console.log('>>>en getSolicitudPiezas-> error', err);
+            //console.log('>>>en getProgQuirurgica-> error', err);
 
             //this.pq = { fechaFirma: Date() };
 
             //this.$refs.notify.showNotify("ERROR AL LEER DOCUMENTO"+JSON.stringify(err.Error), 2.5);
 
-            
+
             ////this.pq.sitioObtencion = figHumanaBase64;
             ////this.trazos = this.pq.sitioObtencion;
             this.pq = {};

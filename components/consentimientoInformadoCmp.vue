@@ -51,7 +51,7 @@
           <td>
             <select v-model="ci.medicoAnestesiologo">
               <option v-for="mm in paciente.medicos" v-bind:value="mm._id">
-                {{ mm.nombre }} - {{mm.especialidad}} -{{mm._id}}
+                {{ mm.nombre }} - {{mm.especialidad}}
               </option>
             </select>
           </td>

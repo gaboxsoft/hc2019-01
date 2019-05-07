@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\components",
-    "\\msiformatos",
-    "\\pages"
+    "\\models",
+    "\\msiformatos"
   ],
-  "SelectedNode": "\\components\\progQuirurgicACMP.vue",
+  "SelectedNode": "\\msiformatos",
   "PreviewInSolutionExplorer": false
 }

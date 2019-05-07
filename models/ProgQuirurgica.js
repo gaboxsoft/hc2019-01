@@ -23,6 +23,19 @@ let progQuirurgicaSchema = new Schema({
     type: Date
   },
 
+  hb: {
+    type: String,
+    uppercase: true,
+  },
+  ht: {
+    type: String,
+    uppercase: true,
+  },
+  gpoRH: {
+    type: String,
+    uppercase: true,
+  },
+
   nombreResponsableProgramacion: {
     type: String,
     uppercase: true,
@@ -53,7 +66,7 @@ let progQuirurgicaSchema = new Schema({
     uppercase: true,
   },
 
-  estudiosPostoperatorio: {
+  diagnosticoPostoperatorio: {
     type: String,
     uppercase: true,
   },
@@ -65,7 +78,7 @@ let progQuirurgicaSchema = new Schema({
 
 
   
-  tipoAnestecia: {
+  tipoAnestesia: {
     type: String, // Local-Regional/General
     uppercase: true,
   },
@@ -108,15 +121,9 @@ let progQuirurgicaSchema = new Schema({
     ref: 'Usuario'
   },
 
-  medicoAnesteciologo: {
+  medicoAnestesiologo: {
     type: Schema.Types.ObjectId,
     ref: 'Usuario'
-  },
-  firmaBase64Paciente: {
-    type: String,
-  },
-  firmaBase64Responsable: {
-    type: String,
   },
 
 

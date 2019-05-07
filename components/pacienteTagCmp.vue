@@ -2,7 +2,7 @@
   <!--<div class="contanier fixed-top margin-bottom:10px">-->
   <div ref="barraMensajes">
     <!--<p>id: -{{getPacienteId}}</p>-->
-    <h5 class="bg-warning ">EXPEDIENTE:  {{paciente?paciente.nombre:'N I N G U N O'}} <!----- {{paciente?paciente.diagnosticoIngreso:''}}--></h5>
+    <h5 v-bind:class="{'bg-warning':paciente.nombre,'bg-danger':!paciente.nombre}">EXPEDIENTE:  {{paciente.nombre?paciente.nombre:'N I N G U N O'}} <!----- {{paciente?paciente.diagnosticoEgreso:''}}--></h5>
   </div>
   <!--</div>-->
 </template>
