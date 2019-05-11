@@ -70,9 +70,9 @@ let verificaToken = (req, res, next) => {
 
 let checkRol = (roles, usuario) => {
 
-   console.log('VERIFICANDO ROL (checkRol())=>');
-  console.log('Usuario.rol=> ?', usuario.rol);
-  console.log('roles=>?', roles);
+  // console.log('VERIFICANDO ROL (checkRol())=>');
+  //console.log('Usuario.rol=> ?', usuario.rol);
+  //console.log('roles=>?', roles);
   //console.log('verificaAdminRol, req.usuario.rol!="ENFERMERIA_ROL"?', req.usuario.rol != "ENFERMERIA_ROL");
   let ok = false;
   for (var i = 0; i < roles.length; i++) {

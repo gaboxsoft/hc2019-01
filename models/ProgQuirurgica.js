@@ -108,7 +108,7 @@ let progQuirurgicaSchema = new Schema({
     ref: 'Usuario'
   },
 
-  firmaBase64medicoCirujano: {
+  firmaBase64MedicoCirujano: {
     type: String,
   },
 
@@ -124,6 +124,9 @@ let progQuirurgicaSchema = new Schema({
   medicoAnestesiologo: {
     type: Schema.Types.ObjectId,
     ref: 'Usuario'
+  },
+  firmaBase64Autorizo: {
+    type: String,
   },
 
 

@@ -61,7 +61,7 @@
         <tr>
           <td class="text-right">Anestesiólogo:</td>
           <td>
-            <select v-model="pq.medicoAnesteciologo">
+            <select v-model="pq.medicoAnestesiologo">
               <option v-for="mm in paciente.medicos" v-bind:value="mm._id">
                 {{ mm.nombre }} - {{mm.especialidad}}
               </option>
@@ -165,7 +165,14 @@
               <p><img v-bind:src="firma(pq.firmaBase64MedicoCirujano)" width="300" height="60" /></p>
             </td>
           </tr>
-
+          <tr>
+            <td>
+              <b-btn class="bg-success" v-on:click="firmaAutorizo">FIRMA PACIENTE O FAMILAR:</b-btn>
+            </td>
+            <td id="firmaAutorizo">
+              <p><img v-bind:src="firma(pq.firmaBase64Autorizo)" width="300" height="60" /></p>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -222,11 +229,15 @@
             case 'MEDICO':
               this.pq.firmaBase64MedicoCirujano = this.firmaBase64Back;
               break;
-            
+            case 'AUTORIZO':
+              this.pq.firmaBase64Autorizo = this.firmaBase64Back;
+              break;
+
             default:
             // code block
           }
 
+          //console.log('EN seFIRMO: ', this.pq.firmaBase64MedicoCirujano);
 
           this.estaFirmando = false;
           this.tituloFirma = '';
@@ -256,9 +267,9 @@
         return '';
       },
 
-      firmaEnfermera: function () {
-        this.quienFirma = 'ENFERMERA';
-        document.getElementById('firmaEnfermera').appendChild(document.getElementById('firmaX'));
+      firmaAutorizo: function () {
+        this.quienFirma = 'AUTORIZO';
+        document.getElementById('firmaAutorizo').appendChild(document.getElementById('firmaX'));
         this.firmar();
       },
 
@@ -281,6 +292,9 @@
       },
 
       guardar: function () {
+
+        //console.log('0.- this.pq=', this.pq);
+        //console.log('0.1.- this.pq.firmaBase64MedicoCirujano=', this.pq.firmaBase64MedicoCirujano);
 
         const req = {
           method: this.pq.paciente ? 'put' : 'post',
@@ -318,14 +332,20 @@
             piezaQuirurgica: this.pq.piezaQuirurgica,
 
             medicoCirujano: this.pq.medicoCirujano,
-            firmaBase64medicoCirujano: this.pq.firmaBase64medicoCirujano,
+            firmaBase64MedicoCirujano: this.pq.firmaBase64MedicoCirujano,
             medicoAyudante1: this.pq.medicoAyudante1,
             medicoAyudante2: this.pq.medicoAyudante2,
             medicoAnestesiologo: this.pq.medicoAnestesiologo,
-           
+
+            firmaBase64Autorizo: this.pq.firmaBase64Autorizo,
+
+
             //////////////////
           }
         };
+        //console.log('this.pq=', this.pq.firmaBase64Autorizo);
+        //console.log('REQ.DATA=', req.data.firmaBase64Autorizo);
+
         axios(req)
           .then((response) => {
             this.pq = response.data.progQuirurgica;
@@ -455,7 +475,7 @@
           this.$refs.notify.showNotify("ANTES DEBES AGREGAR Y GUARDAR LOS DATOS", 4);
           return;
         }
-        axios.get(process.env.urlServer + '/msi22/' + this.$store.state.pacienteId, {
+        axios.get(process.env.urlServer + '/msi20/' + this.$store.state.pacienteId, {
           headers: {
             token: this.getToken,
             Accept: 'application/pdf',

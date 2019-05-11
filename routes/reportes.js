@@ -9,6 +9,7 @@ const AltoRiesgo = require('../models/altoRiesgo');
 const AltaVoluntaria = require('../models/altaVoluntaria');
 const ResponsivaRN = require('../models/responsivaRN');
 const SolicitudPiezas = require('../models/solicitudPiezas');
+const ProgQuirurgica = require('../models/progQuirurgica');
 
 
 const express = require('express');
@@ -34,6 +35,7 @@ const altoRiesgoPdf = require('../library/msiReportes/altoRiesgoPdf');
 const altaVoluntariaPdf = require('../library/msiReportes/altaVoluntariaPdf');
 const responsivaRNPdf = require('../library/msiReportes/responsivaRNPdf');
 const solicitudPiezasPdf = require('../library/msiReportes/solicitudPiezasPdf');
+const progQuirurgicaPdf = require('../library/msiReportes/progQuirurgicaPdf');
 
 
 //app.get('/contrato', verificaToken, function(req, res) {
@@ -395,6 +397,44 @@ app.get('/msi15/:id', function (req, res) {
 
 });
 
+app.get('/msi20/:id', function (req, res) {
+
+  //id de paciente
+
+  console.log('generando prog Quirúrgica>>...............');
+  const id = req.params.id;
+  ProgQuirurgica.findOne({ paciente: id }, (err, progQuirurgicaBD) => {
+    if (err) {
+      return res.status(400).
+        json({ ok: false, error: 'Error al generar formato prog Quirúrgica PDF ' + err });
+    };
+    if (!progQuirurgicaBD) {
+      return res.status(401).
+        json({ ok: false, error: 'Error al generar formato prog Quirúrgica PDF ' + err });
+    };
+    console.log('=================== MSI20->progQuirurgicaBD===================');
+    console.log('MSI20->progQuirurgicaBD', JSON.stringify(progQuirurgicaBD));
+
+    let filePath = progQuirurgicaPdf(progQuirurgicaBD);
+
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-20', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+
+  })
+    //.populate('paciente');
+    .populate({
+      path: 'paciente',
+      populate: {
+        path: 'medicos'
+      }
+    })
+    .populate('medicoCirujano')
+    .populate('medicoAyudante1')
+    .populate('medicoAyudante2')
+    .populate('medicoAnestesiologo')
+    ;
+
+});
+
 
 app.get('/msi22/:id', function (req, res) {
 
@@ -427,8 +467,6 @@ app.get('/msi22/:id', function (req, res) {
     });
   
 });
-
-
 
 app.get('/msi42/:id', function (req, res) {
 

@@ -40,6 +40,8 @@ app.post('/ProgQuirurgica/:id', [verificaToken, rolAD], function (req, res) {
 
   let body = req.body;
 
+
+
   //console.log('2.- POST body= ', body);
 
   // Busca paciente
@@ -55,6 +57,8 @@ app.post('/ProgQuirurgica/:id', [verificaToken, rolAD], function (req, res) {
     let progQuirurgica = new ProgQuirurgica({
 
       paciente: id,
+
+
 
       esUrgente: body.esUrgente,
       fechaProgramada: body.fechaProgramada,
@@ -82,10 +86,12 @@ app.post('/ProgQuirurgica/:id', [verificaToken, rolAD], function (req, res) {
       piezaQuirurgica: body.piezaQuirurgica,
 
       medicoCirujano: body.medicoCirujano,
-      firmaBase64medicoCirujano: body.firmaBase64medicoCirujano,
+
+      firmaBase64MedicoCirujano: body.firmaBase64MedicoCirujano,
       medicoAyudante1: body.medicoAyudante1,
       medicoAyudante2: body.medicoAyudante2,
       medicoAnestesiologo: body.medicoAnestesiologo,
+      firmaBase64Autorizo: body.firmaBase64Autorizo,
 
       /////////////////////////
       //Sello
@@ -110,11 +116,13 @@ app.put('/ProgQuirurgica/:id', [verificaToken, rolADE], function (req, res) {
   const id = req.params.id; // Id del paciente
 
   let body = req.body;
+
   body.usuario = req.usuario._id;
   body.fechaModificacion = Date.now();
-
-  //console.log('3.- PUT this.ci= ', body);
-
+  //console.log('========== PUT ========');
+  //console.log('3.- PUT = ', body);
+  //console.log('=======================');
+  //console.log('3.1.- PUT = ', req.body);
 
   //Paciente.findByIdAndUpdate(id, { diagnosticoEgreso: body.diagnosticoEgreso }, (err, pacienteBD) => {
   Paciente.findById(id, (err, pacienteBD) => {
