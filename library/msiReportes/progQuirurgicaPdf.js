@@ -17,7 +17,7 @@ const progQuirurgicaPdf = (progQuirurgicaBD) => {
 
   let pq = progQuirurgicaBD;
   //console.log('EN progQuirurgicaPdf->', pq);
-  let paciente = pq.paciente;
+  
 
   const hojaCartaPort = [612, 792];
   const hojaCartaLan = [792, 612];
@@ -67,25 +67,23 @@ const progQuirurgicaPdf = (progQuirurgicaBD) => {
   //  console.log('\r\n sfield->', field.name);
   //  writeLine(doc, eval(field.name), field.row, field.col, field.align, field.fontSize, field.color);
   //});
+  let paciente = pq.paciente;
+  let medicos = paciente.medicos;
+  let medicoTratante = medicos[0];
+  let medicoAyudante1 = pq.medicoAyudante1;
+  let medicoAyudante2 = pq.medicoAyudante2;
+  let medicoAnestesiologo = pq.medicoAnestesiologo;
 
+  let medicoCirujano = pq.medicoCirujano;
+
+
+  let domicilio = (paciente.calle || '') + ' ' +
+    (paciente.numExterior || '') + ' ' + (paciente.numInterior || '') + (paciente.calle ? ', ' : '') +
+    (paciente.colonia ? paciente.colonia + ',' : '') + (paciente.municipio ? paciente.municipio + ' ' : '') +
+    (paciente.entidad ? paciente.entidad + ' ' : '') + (paciente.CP ? ' CP' + paciente.CP : '');
 
   pages[0].forEach(function (field) {
-    let paciente = pq.paciente;
-    let medicos = paciente.medicos;
-    let medicoTratante = medicos[0];
-    let domicilio = (paciente.calle || '') + ' ' +
-      (paciente.numExterior || '') + ' ' + (paciente.numInterior || '') + (paciente.calle ? ', ' : '') +
-      (paciente.colonia ? paciente.colonia + ',' : '') + (paciente.municipio ? paciente.municipio + ' ' : '') +
-      (paciente.entidad ? paciente.entidad + ' ' : '') + (paciente.CP ? ' CP' + paciente.CP : '');
-
-    let medicoCirujano = pq.medicoCirujano;
-    let medicoAyudante1 = pq.medicoAyudante1;
-    let medicoAyudante2 = pq.medicoAyudante2;
-    let medicoAnestesiologo = pq.medicoAnestesiologo;
-
-
-    console.log('field-->', field, 'type->', field.type, eval(field.name));
-    
+    console.log('field-->', field, 'type->', field.type, eval(field.name));    
 
     writeLine(doc, eval(field.name), field.row, field.col, field.align, field.indent, field.fontSize, field.color, field.width, field.type);
   });
@@ -94,7 +92,7 @@ const progQuirurgicaPdf = (progQuirurgicaBD) => {
 
   doc.addPage({
     size: 'letter',
-    layout: 'portrait',
+    layout: 'portrait', 
     margin: 0
   });
 
@@ -104,6 +102,7 @@ const progQuirurgicaPdf = (progQuirurgicaBD) => {
     fit: [anchoHoja, altoHoja]
   });
   pages[1].forEach(function (field) {
+    
     console.log(' hoja 2 field-->', field, 'type->', field.type);
     writeLine(doc, eval(field.name), field.row, field.col, field.align, field.indent, field.fontSize, field.color, field.width, field.type);
   });
