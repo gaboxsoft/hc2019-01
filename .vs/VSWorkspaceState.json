@@ -4,10 +4,9 @@
     "\\library",
     "\\library\\fechas",
     "\\library\\msiReportes",
-    "\\library\\Numeros",
     "\\pages",
     "\\routes"
   ],
-  "SelectedNode": "\\library\\Numeros",
+  "SelectedNode": "\\sube.bat",
   "PreviewInSolutionExplorer": false
 }

@@ -71,7 +71,7 @@ const contratoServiciosPdf = (contratoServiciosBD) => {
   //});
   let paciente = cs.paciente;
   let medicos = paciente.medicos;
-  
+  let medicoTratante = medicos[0];
 
 
   let domicilio = (paciente.calle || '') + ' ' +
@@ -82,11 +82,11 @@ const contratoServiciosPdf = (contratoServiciosBD) => {
   domicilio = (paciente.calle || '') + ' ' +
     (paciente.numExterior || '') + ' ' + (paciente.numInterior || '') + (paciente.calle ? ', ' : '');
 
-  let letraNumero = numeroALetras(500.34, {
-  plural: 'PESOS M.N.',
-    singular: 'PESOS M.N.',
-  centPlural: 'centavos',
-  centSingular: 'centavo'
+  let letraNumero = numeroALetras(cs.importeAnticipo, {
+  plural: 'PESOS',
+    singular: 'PESOS',
+  centPlural: '',
+  centSingular: ''
 });
 
 
