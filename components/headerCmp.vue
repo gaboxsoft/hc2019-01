@@ -18,7 +18,7 @@
           <b-nav-item-dropdown text="RECEPCIÓN"
                                right>
             <b-dropdown-item href="/RegistroPaciente">Pacientes</b-dropdown-item>
-            <b-dropdown-item disabled href="/Contrato">Contrato Prestación Servicios</b-dropdown-item>
+            <b-dropdown-item href="/ContratoServicios">Contrato Prestación Servicios</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="VALORACIÓN"
                                left>

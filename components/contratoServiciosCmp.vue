@@ -1,61 +1,82 @@
-
 <template>
   <!--style="margin-top:100px;"-->
   <div class="col-md-8">
-    <div>
-      <h2 class="text-primary">{{tituloPagina}} -- {{estaFirmado()}}</h2>
-    </div>
+    <!--<div>
+    <h2 class="text-primary">{{tituloPagina}} -- {{estaFirmado()}}</h2>
+  </div>-->
     <notifyCmp ref="notify" />
+
     <b-btn class="bg-success button-right " v-on:click="guardar">GUARDAR</b-btn>
-
-    <form action="#">
+    <b-btn class="bg-success button-right " v-on:click="imprimir">IMPRIMIR</b-btn>
+    <div>
       <table class="table table-sm table-info">
-
 
         <tbody>
           <tr>
             <td style="width:40%;">Nombre responsable paciente:</td>
-            <td><input type="text" class="text input-text" v-model="contratoServicios.nombreResponsablePaciente" name="nombreResponsablePaciente"></td>
+            <td><input type="text" class="text input-text" v-model="cs.nombreResponsablePaciente" name="nombreResponsablePaciente"></td>
           </tr>
           <tr>
             <td>Importe anticipo por servicios($):</td>
-            <td><input type="number" class="input-text" v-model="contratoServicios.importeAnticipo" name="importeAnticipo"></td>
+            <td><input type="number" class="input-text" v-model="cs.importeAnticipo" name="importeAnticipo"></td>
           </tr>
           <tr>
             <td>Nombre Representante Legal Medica:</td>
-            <td><input type="text" class="input-text" v-model="contratoServicios.nombreRepresentanteLegalMedica" name="nombreRepresentanteLegalMedica"></td>
+            <td><input type="text" class="input-text" v-model="cs.nombreRepresentanteLegalMedica" name="nombreRepresentanteLegalMedica"></td>
           </tr>
-
           <tr>
             <td>Fecha de Firma de Contrato:</td>
-            <td><input type="date" class="input-text" v-model="contratoServicios.fechaFirmaContrato" name="fechaFirmaContrato"></td>
+            <td><input type="date" class="input-text" v-model="cs.fechaFirmaContrato" name="fechaFirmaContrato"></td>
           </tr>
-
         </tbody>
       </table>
       <!--<firmaCmp id="firmaPaciente" v-show="estaFirmando" @firmaCapturada="firmaBase64Paciente=$event" />
-      <firmaCmp id="firmaRepresentanteLegal" v-show="estaFirmando" @firmaCapturada="firmaBase64RepresentanteLegal=$event" />
-      <firmaCmp id="firmaResponsablePaciente" v-show="estaFirmando" @firmaCapturada="firmaBase64ResponsablePaciente=$event" />-->
-
+    <firmaCmp id="firmaRepresentanteLegal" v-show="estaFirmando" @firmaCapturada="firmaBase64RepresentanteLegal=$event" />
+    <firmaCmp id="firmaResponsablePaciente" v-show="estaFirmando" @firmaCapturada="firmaBase64ResponsablePaciente=$event" />-->
       <!--<b-btn class="bg-success button-right " v-on:click="firmaPaciente">FIRMA PACIENTE</b-btn>
-      <b-btn class="bg-success button-right " v-on:click="firmaRepresentanteLegal">FIRMA RESPONSABLE PACIENTE</b-btn>
-      <b-btn class="bg-success button-right " v-on:click="firmaResponsablePaciente">FIRMA REPRESENTANTE MEDICA</b-btn>-->
+    <b-btn class="bg-success button-right " v-on:click="firmaRepresentanteLegal">FIRMA RESPONSABLE PACIENTE</b-btn>
+    <b-btn class="bg-success button-right " v-on:click="firmaResponsablePaciente">FIRMA REPRESENTANTE MEDICA</b-btn>-->
+      <!--<firmaCmp id="firmaPaciente" disabled="false" @firmaCapturada="firmaBase64=$event" />
+    <firmaCmp id="firmaRepresentanteLegal" disabled="true" @firmaCapturada="firmaBase64RepresentanteLegal=$event" />
+    <firmaCmp id="firmaResponsablePaciente" disabled="true" @firmaCapturada="firmaBase64ResponsablePaciente=$event" />-->
 
-
-      <firmaCmp id="firmaPaciente" disabled="false" @firmaCapturada="firmaBase64=$event" />
-      <firmaCmp id="firmaRepresentanteLegal"  disabled="true" @firmaCapturada="firmaBase64RepresentanteLegal=$event" />
-      <firmaCmp id="firmaResponsablePaciente"  disabled="true" @firmaCapturada="firmaBase64ResponsablePaciente=$event" />
-      <!--</no-ssr>-->
-    </form>
+    </div>
     <!--<b-btn class="bg-success" v-on:click="guardar">GUARDAR</b-btn>-->
-    <br />
-    <br />
-    <br />
-    <br />
+
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <b-btn class="bg-success" v-on:click="firmaRepresentanteLegal">FIRMA REPRESENTANTE LEGAL</b-btn>
+            </td>
+            <td id="firmaRepresentanteLegal">
+              <firmaCmp id="firmaX" v-show="estaFirmando" @firmaCapturada="firmaBase64=$event" />
+              <p><img v-bind:src="firma(cs.firmaBase64RepresentanteLegal)" width="300" height="60" /></p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b-btn class="bg-success" v-on:click="firmaPaciente">FIRMA PACIENTE:</b-btn>
+            </td>
+            <td id="firmaPaciente">
+              <p><img v-bind:src="firma(cs.firmaBase64Paciente)" width="300" height="60" /></p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b-btn class="bg-success" v-on:click="firmaResponsablePaciente">FIRMA RESPONSABLE CUENTA:</b-btn>
+            </td>
+            <td id="firmaResponsablePaciente">
+              <p><img v-bind:src="firma(cs.firmaBase64ResponsablePaciente)" width="300" height="60" /></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 <script>
-  //const ContratoServicios = require('../models/contratoServicios');
 
   const urlGetPacientes = process.env.urlServer + '/Pacientes?limite=0&desde=0';//'http://localhost:3000/Pacientes?limite=0&desde=0';
   const MAX_SIZE_NOMBRE = 50;
@@ -75,14 +96,14 @@
       return {
         tituloPagina: 'CONTRATO DE SERVICIOS',
         totalPacientes: 0,
-        contratoServicios: {},
+        cs: {},
         token: '',
         paciente: {},
         esNuevoContrato: false,
-        estaFirmando: false,
-        firmaBase64Paciente: '',
-        firmaBase64RepresentanteLegal: '',
-        firmaBase64ResponsablePaciente: '',
+        firmaBase64:'',
+        firmaBase64Back: '',
+        quienFirma: '',
+        estaFirmando: false
       }
     },
     computed: {
@@ -98,6 +119,9 @@
       },
       getPacienteId() {
         return this.$store.state.pacienteId;
+      },
+      seFirmo: function () {
+        return !(this.firmaBase64 === '');
       }
     },
     watch: {
@@ -105,19 +129,34 @@
         this.getCurrentPaciente(this.getToken);
       },
       seFirmo: function () {
-        return !(this.firmaBase64 === '');
-      }
 
-    },
+        if (this.seFirmo) {
+          // Para clonar la firma en otro objeto y que no sean la misma referencia
+          this.firmaBase64Back = JSON.parse(JSON.stringify(this.firmaBase64));
 
+          //console.log(this.quienFirma, ':[', this.firmaBase64Back, ']');
+          switch (this.quienFirma) {
+            case 'REPRESENTANTELEGAL':
+              this.cs.firmaBase64RepresentanteLegal = this.firmaBase64Back;
+              break;
+            case 'PACIENTE':
+              this.cs.firmaBase64Paciente = this.firmaBase64Back;
+              break;
 
-    watch: {
-      seFirmo: function () {
-        //console.log(' --- EN nota urgencias-> ' + (!(this.firmaBase64 === '') ? 'FIRMADO!' : "NO FIRMADO"));
-        //console.log(' ---- EN nota urgencias-> ' + this.firmaBase64);
-        this.guardar();
+            case 'RESPONSABLEPACIENTE':
+              this.cs.firmaBase64ResponsablePaciente = this.firmaBase64Back;
+              break;
 
+            default:
+            // code block
+          }
+
+          //console.log('EN seFIRMO: ', this.pq.firmaBase64MedicoCirujano);
+
+          this.estaFirmando = false;
+        }
       },
+
     },
 
     beforeMount() {
@@ -130,14 +169,34 @@
 
 
     methods: {
-
+      firma: function (firmaBase64) {
+        if (firmaBase64) {
+          return "data: image/png;base64," + firmaBase64
+        };
+        return "no-image.jpg"
+      },
+      firmaRepresentanteLegal: function () {
+        this.quienFirma = 'REPRESENTANTELEGAL';
+        document.getElementById('firmaRepresentanteLegal').appendChild(document.getElementById('firmaX'));
+        this.firmar();
+      },
       firmaPaciente: function () {
-        firmaPaciente = true;
+        this.quienFirma = 'PACIENTE';
+        document.getElementById('firmaPaciente').appendChild(document.getElementById('firmaX'));
+        this.firmar();
+      },
+      firmaResponsablePaciente: function () {
+        this.quienFirma = 'RESPONSABLEPACIENTE';
+        document.getElementById('firmaResponsablePaciente').appendChild(document.getElementById('firmaX'));
+        this.firmar();
+      },
+      firmar: function () {
+        this.estaFirmando = true;
+        this.firmaBase64 = '';
+        document.getElementById('btnIniciarFirma').click();
       },
 
-      estaFirmado: function () {
-        return this.contratoServicios.firmaBase64Paciente != '' ? 'NO FIRMADO' : 'FIRMADO POR PACIENTE';
-      },
+
       guardar: function () {
         const req = {
           method: this.esNuevoContrato ? 'post' : 'put',
@@ -147,15 +206,16 @@
           },
           data: {
 
-            paciente: this.$store.state.pacienteId,
-            nombreResponsablePaciente: this.contratoServicios.nombreResponsablePaciente,
-            nombreRepresentanteLegalMedica: this.contratoServicios.nombreRepresentanteLegalMedica,//representanteLegal.nombreCompleto(),
-            importeAnticipo: this.contratoServicios.importeAnticipo,
-            fechaFirmaContrato: this.contratoServicios.fechaFirmaContrato,
+            //paciente: this.$store.state.pacienteId,
+            importeAnticipo: this.cs.importeAnticipo,
+            fechaFirmaContrato: this.cs.fechaFirmaContrato,
+            nombreRepresentanteLegalMedica: this.cs.nombreRepresentanteLegalMedica,
 
-            firmaBase64Paciente: this.contratoServicios.firmaBase64Paciente,
-            firmaBase64RepresentanteLegal: this.contratoServicios.firmaBase64RepresentanteLegal,
-            firmaBase64ResponsablePaciente: this.contratoServicios.firmaBase64ResponsablePaciente,
+            nombreResponsablePaciente: this.cs.nombreResponsablePaciente,
+            
+            firmaBase64Paciente: this.cs.firmaBase64Paciente,
+            firmaBase64RepresentanteLegal: this.cs.firmaBase64RepresentanteLegal,
+            firmaBase64ResponsablePaciente: this.cs.firmaBase64ResponsablePaciente,
 
           }
         };
@@ -173,29 +233,28 @@
       },
       eliminar: function () {
         return true;
-      }
-      ,
-      archiva: () => {
-        return true;
-
       },
-      modificar: (pacienteId) => {
-        this.$store.commit('setPacienteId', pacienteId)
 
-
-      },
-      seleccionar: function (pacienteId) {
-        //console.log('aquí en seleccionar paciente, id: ', pacienteId);
-        this.$store.commit('setPacienteId', pacienteId)
-
-
-        //this.$router.push({ name: 'index' })
-        //this.$forceUpdate();
-
-      },
-      addPaciente: function () {
-        return true;
-
+      imprimir: function () {
+        if (!this.cs.paciente) {
+          this.$refs.notify.showNotify("ANTES DEBES AGREGAR Y GUARDAR LOS DATOS", 4);
+          return;
+        }
+        axios.get(process.env.urlServer + '/msi00/' + this.$store.state.pacienteId, {
+          headers: {
+            token: this.getToken,
+            Accept: 'application/pdf',
+            responseType: 'blob'
+          }
+        })
+          .then((response) => {
+            this.$refs.notify.showNotify("CLICK AQUÍ PARA VER EL FORMATO", 4, response.data.pdfFile, true);
+          },
+            (error) => {
+              //this.err = error.response.data.error;
+              //console.log('Error en imprimir Nota Urgencias: ', this.err);
+              this.$refs.notify.showNotify("ERROR AL GENERAR EL FORMATO", 5);
+            });
       },
       getCurrentPaciente: function (token) {
         //console.log('>> urlGetPaciente en UPDATE_PACIENTEcmp: ', this.urlGetPaciente);
@@ -341,12 +400,12 @@
           }
         })
           .then((response) => {
-            this.contratoServicios = response.data.contratoServicios;
+            this.cs = response.data.contratoServicios;
             //console.log('urlGetPaciente en UPDATE_PACIENTEcmp: ', this.urlGetPaciente);
             //console.log('response.data en UPDATE_PACIENTEcmp: ', response.data);
-            //this.contratoServicios.fechaNacimiento = moment(this.paciente.fechaNacimiento).format('YYYY-MM-DD');
+            //this.cs.fechaNacimiento = moment(this.paciente.fechaNacimiento).format('YYYY-MM-DD');
             //this.$store.commit('setCurrentPaciente', this.paciente);
-            console.log('Si hay contrato: ', this.contratoServicios);
+            //console.log('Si hay contrato: ', this.cs);
             this.esNuevoContrato = false;
 
           },
@@ -356,10 +415,10 @@
               //console.log('en UpdatePaciente->getCurrentPaciente->error', this.err);
               //this.$store.commit('setCurrentPaciente', undefined);
 
-              console.log('NO hay contrato: ', this.contratoServicios);
+              //console.log('NO hay contrato: ', this.cs);
               this.esNuevoContrato = true;
 
-              this.contratoServicios = {
+              this.cs = {
                 paciente: '',
                 nombreResponsable: '',
                 nombreRepresentanteLegalMedica: '',

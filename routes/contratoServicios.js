@@ -66,7 +66,7 @@ app.get('/contratoServicios/:id', [verificaToken, verificaAdminRol], function (r
   ContratoServicios.findOne({ paciente:id }, (err, contratoServiciosBD) => {
     if (err) {
       return res.status(401).
-        json({ ok: false, error: err, mensaje: 'hubo en error' });
+        json({ ok: false, error: err });
     };
     if (!contratoServiciosBD) {
       
@@ -112,20 +112,25 @@ app.post('/contratoServicios/:id', [verificaToken, verificaAdminRol], function (
     firmaBase64RepresentanteLegal: body.firmaBase64RepresentanteLegal,
     firmaBase64ResponsablePaciente: body.firmaBase64ResponsablePaciente,
 
-    // Sello
-    fechaCreacionSe: Date().toLocaleString(),
-    fechaModificacionSe: Date().toLocaleString(),
-    situacionSe: 1,
+    
+     /////////////////////////
+      //Sello
+      fechaCreacionSe: new Date(),
+    fechaModificacionSe: new Date(),
+    situacionSe: 1, //1-activo
+    //fechaBorrado: default nada
     usuarioSe: req.usuario._id
 
   });
 
   contratoServicio.save((err, contratoServicioBD) => {
     if (err) {
-      res.status(400).json({ ok: false, error: err, body: contratoServicio });
-    } else {
-      res.status(200).json({ok:true,  contratoServicio: contratoServicioBD });
+      return res.status(400).json({ ok: false, error: err });
+    };
+    if (!contratoServicioBD) {
+      return res.status(401).json({ ok: false, error: 'No pude guardar el contrato de servicios' });
     }
+    res.status(200).json({ ok: true, contratoServicio: contratoServicioBD });
   });
 });
 

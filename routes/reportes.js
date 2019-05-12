@@ -1,4 +1,6 @@
 const Paciente = require('../models/paciente');
+
+const ContratoServicios = require('../models/contratoServicios');
 const NotaUrgencias = require('../models/notaUrgencias');
 const Evolucion = require('../models/evolucion');
 const Receta = require('../models/receta');
@@ -23,6 +25,7 @@ const pdf = require('pdfkit');
 const pdfTools = require('../library/pdfkit/gxPdf');
 
 
+const contratoServiciosPdf = require('../library/msiReportes/contratoServiciosPdf');
 const hojaInicialExpedientePdf = require('../library/msiReportes/hojaInicialExpedientePdf');
 const historiaClinicaPdf = require('../library/msiReportes/historiaClinicaPdf');
 const notaUrgenciasPdf = require('../library/msiReportes/notaUrgenciasPdf');
@@ -41,13 +44,42 @@ const progQuirurgicaPdf = require('../library/msiReportes/progQuirurgicaPdf');
 //app.get('/contrato', verificaToken, function(req, res) {
 app.get('/msi00/:id', function (req, res) {
 
-  console.log('generando contrato..................');
-  contratoPdf();
+  ////console.log('generando contrato..................');
+  ////contratoPdf();
 
   ////rpt.save('CMSI-00-contrato.pdf');
 
 
-  return res.status(200).json({ ok: true, data: 'todo bien....' });
+  ////return res.status(200).json({ ok: true, data: 'todo bien....' });
+
+  //id de paciente
+
+  console.log('generando contrato Servicios>>...............');
+  const id = req.params.id;
+  ContratoServicios.findOne({ paciente: id }, (err, contratoServiciosBD) => {
+    if (err) {
+      return res.status(400).
+        json({ ok: false, error: 'Error al generar formato contrato Servicios PDF ' + err });
+    };
+    if (!contratoServiciosBD) {
+      return res.status(401).
+        json({ ok: false, error: 'Error al generar formato contrato Servicios PDF ' + err });
+    };
+    console.log('=================== MSI00->contratoServiciosBD===================');
+    console.log('MSI20->contratoServiciosBD', JSON.stringify(contratoServiciosBD));
+
+    let filePath = contratoServiciosPdf(contratoServiciosBD);
+
+    return res.status(200).json({ ok: true, menssaje: 'Se genero el formato MSI-20', pdfFile: process.env.URL_SERVER + '/pdfs/' + path.basename(filePath) });
+
+  })
+    //.populate('paciente');
+    .populate({
+      path: 'paciente',
+      populate: {
+        path: 'medicos'
+      }
+    });
 });
 
 app.get('/msi01/:id', function (req, res) {
@@ -403,7 +435,7 @@ app.get('/msi20/:id', function (req, res) {
 
   console.log('generando prog Quirúrgica>>...............');
   const id = req.params.id;
-  ProgQuirurgica.findOne({ paciente: id }, (err, progQuirurgicaBD) => {
+  ContratoServicios.findOne({ paciente: id }, (err, progQuirurgicaBD) => {
     if (err) {
       return res.status(400).
         json({ ok: false, error: 'Error al generar formato prog Quirúrgica PDF ' + err });

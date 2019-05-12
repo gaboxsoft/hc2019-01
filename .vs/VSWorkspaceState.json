@@ -2,10 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\library",
+    "\\library\\fechas",
     "\\library\\msiReportes",
-    "\\msiformatos",
+    "\\library\\Numeros",
+    "\\pages",
     "\\routes"
   ],
-  "SelectedNode": "\\library\\msiReportes\\progQuirurgicaFields (2).cfg",
+  "SelectedNode": "\\library\\Numeros",
   "PreviewInSolutionExplorer": false
 }
