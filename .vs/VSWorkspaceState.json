@@ -1,12 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\library",
-    "\\library\\fechas",
-    "\\library\\msiReportes",
-    "\\library\\numeros",
+    "\\components",
+    "\\models",
     "\\msiformatos",
     "\\pages",
+    "\\public",
     "\\routes"
   ],
   "SelectedNode": "\\sube.bat",

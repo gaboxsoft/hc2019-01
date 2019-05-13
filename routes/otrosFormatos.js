@@ -7,10 +7,9 @@ const path = require('path');
 const app = express();
 
 const Usuario = require('../models/usuario');
-const Producto = require('../models/Paciente');
 const OtrosFormatos = require('../models/otrosFormatos');
 
-let { verificaToken, verificaAdminRol } = require('../middleware/autenticacion');
+let { verificaToken, verificaAdminRol, rolADE } = require('../middleware/autenticacion');
 
 // default options
 app.use(fileUpload());

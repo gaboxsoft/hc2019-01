@@ -2,7 +2,7 @@
 <template>
   <div>
     <!--<div id="template" style="display: none">-->
-    <div id="template">
+    <div id="template" class="bg-warning">
       <!--<div id="template" >-->
       <div class="upload"  v-show="valid">
         <slot><input type="file" /></slot>
@@ -40,8 +40,9 @@
         type: Number,
         default: 1
       },
-      value: Array
+      value:Array
     },
+    // value: { type:Array }
 
     data() {
       return {
@@ -82,7 +83,9 @@
 
         // add all selected files
         for (let file of this.input.files) {
-          this.files.push({ name: file.name })
+          //this.files.push({ name: file.name })
+          this.files.push(file)
+          //console.log('file capturado:',file)
         }
 
         // reset file input
